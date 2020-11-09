@@ -4,6 +4,6 @@
 
  Projektu veido:
 > Toms Bāders
-> Maksims Cvetkovs
-> Georgijs Čeglakovs
-> Niks Erra
+>> Maksims Cvetkovs
+>>> Georgijs Čeglakovs
+>>>> Niks Erra
