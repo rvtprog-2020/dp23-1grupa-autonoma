@@ -3,5 +3,93 @@ body {
     padding: 0;
     font-family: Arial;
 
-    background-color: black;
+    background-color: #3E3A2C;
+}
+
+.navbar {
+    width: 100%;
+    height: 100px;
+
+    background-color: #22201A;
+}
+
+.container {
+    max-width: 960px;
+    min-height: 100px;
+
+    margin: auto;
+
+    background-color: #302C21;
+}
+
+.auto-list li .auto-image {
+    width: 200px;
+    height: 160px;
+
+    margin-top: 10px;
+    margin-left: 10px;
+}
+
+.auto-list li div {
+    display: inline-block;
+    height: 160px;
+    padding: 20px;
+}
+
+.auto-list li .pages {
+    height: auto;
+    margin: auto;
+    background-color: #22201A;
+}
+
+.pages a {
+    padding: 3px;
+    background-color: #FFFFFF;
+}
+
+.pages a.right {
+    margin-left: 20px;
+}
+
+.auto-list li .left {
+    width: 220px;
+    padding: 0;
+}
+
+.auto-list li .center {
+    width: calc(100% - 320px);
+}
+
+.auto-list li .right {
+    width: 100px;
+    height: 50px;
+    margin-top: 80px;
+}
+
+.btn {
+    background-color: #FF0000;
+    border: none;
+    cursor: pointer;
+    padding: 10px;
+}
+
+/*
+    Usage:
+    <ul class="auto-list">
+        <li> ... </li>
+        <li> ... </li>
+    </ul>
+*/
+
+.auto-list {
+    margin: 0;
+    padding: 0;
+    list-style-type: none;
+
+    position: relative;
+}
+
+.auto-list li {
+    width: 100%;
+    display: flex;
 }
