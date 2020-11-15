@@ -17,15 +17,22 @@ body {
     max-width: 960px;
     min-height: 100px;
 
+    padding: 10px;
     margin: auto;
 
     background-color: #302C21;
 }
 
-.auto-list li .auto-image {
+.auto-image {
     width: 200px;
     height: 160px;
+}
 
+.auto-image-center {
+    margin: auto;
+}
+
+.auto-list li .auto-image {
     margin-top: 10px;
     margin-left: 10px;
 }
@@ -43,11 +50,13 @@ body {
 }
 
 .pages a {
+    color: black;
+    text-decoration: none;
     padding: 3px;
     background-color: #FFFFFF;
 }
 
-.pages a.right {
+.pages a.space {
     margin-left: 20px;
 }
 
