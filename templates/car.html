@@ -1,33 +1,12 @@
-<!DOCTYPE html>
-<html lang="lv">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>AutoNomas Auto informācija</title>
+{% extends "layout_new.html" %}
 
-        <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
-    </head>
-    <body>
-        <div class="navbar">
-            <div class="container-navbar">
-                <img src="../../../images/logo.jpg" alt="" class="logo-image">
-
-                <div class="input-box">
-                    <input type="text">
-                    <button type="button">Meklēt</button>
-                </div>
-            </div>
-        </div>
-
-        <div class="container">
-            <img src="../../../images/audi.jpg" alt="" class="auto-image auto-image-center">
-            <div class="center-info">
-                <p>{{ car.name }}</p>
-                <p>Nobraukums: {{ car.mileage }}</p>
-                <p>Sēdvietas: {{ car.seats }}</p>
-                <p>Cena: {{ car.price }}€ / diena</p>
-            </div>
-            <button class="btn btn-blue btn-center">Rezervēt</button>
-        </div>
-    </body>
-</html>
+{% block content %}
+<img src="{{ url_for('static', filename='images/' + car.image) }}" alt="" class="auto-image auto-image-center">
+<div class="center-info">
+    <p>{{ car.name }}</p>
+    <p>Nobraukums: {{ car.mileage }}</p>
+    <p>Sēdvietas: {{ car.seats }}</p>
+    <p>Cena: {{ car.price }}€ / diena</p>
+</div>
+<button class="btn btn-blue btn-center">Rezervēt</button>
+{% endblock %}
