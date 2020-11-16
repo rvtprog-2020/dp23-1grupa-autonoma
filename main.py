@@ -32,7 +32,9 @@ def car_by_id(id):
 
 @app.route("/cars")
 def cars_list():
-    return render_template("cars_list.html")
+    cars_in_page = cars[:3]
+    print(cars_in_page)
+    return render_template("cars_list.html", cars=cars_in_page)
 
 @app.route("/car/0/reserve")
 def car_reserve():
