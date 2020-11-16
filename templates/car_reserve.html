@@ -2,12 +2,12 @@
 
 {% block content %}
 <div class="container">
-    <img src="../../../images/audi.jpg" alt="" class="auto-image auto-image-center">
+    <img src="{{ url_for('static', filename='images/' + car.image) }}" alt="" class="auto-image auto-image-center">
     <div class="center-info">
-        <p>Audi 80</p>
-        <p>Nobraukums: 455'000km</p>
-        <p>Sēdvietas: 4</p>
-        <p>Cena: 6€ / diena</p>
+        <p>{{ car.name }}</p>
+        <p>Nobraukums: {{ car.mileage }} km</p>
+        <p>Sēdvietas: {{ car.seats }}</p>
+        <p>Cena: {{ car.price }}€ / diena</p>
     </div>
     <button class="btn btn-green btn-center">Rezervēt</button>
     <button class="btn btn-blue btn-center">Rediģēt</button>

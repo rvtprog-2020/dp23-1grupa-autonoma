@@ -12,23 +12,23 @@ def load_cars():
 
 cars = load_cars()
 
+def find_car_by_id(id):
+    if type(id) == str:
+        try:
+            id = int(id)
+        except:
+            return None
+    return cars[id] if id >= 0 and id < len(cars) else None
+
 @app.route('/')
 def home():
     return render_template('home.html')
 
 @app.route("/car/<id>")
 def car_by_id(id):
-    try:
-        id = int(id)
-
-        print(id)
-        
-        if id < 0 or id >= len(cars):
-            raise Exception("Out of index")
-
-        return render_template("car_info.html", car=cars[id])
-    except:
-        return "404 car not found"
+    car = find_car_by_id(id)
+    if not car: return "404"
+    return render_template("car_info.html", car=car)
 
 @app.route("/cars")
 def cars_list():
@@ -36,9 +36,11 @@ def cars_list():
     print(cars_in_page)
     return render_template("cars_list.html", cars=cars_in_page)
 
-@app.route("/car/0/reserve")
-def car_reserve():
-    return render_template("car_reserve.html")
+@app.route("/car/<id>/reserve")
+def car_reserve(id):
+    car = find_car_by_id(id)
+    if not car: return "404"
+    return render_template("car_reserve.html", car=car)
 
 @app.route("/reserved")
 def reserved_cars_list():
