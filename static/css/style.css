@@ -1,0 +1,212 @@
+:root {
+    --page-bg: #3E3A2C;
+    --navbar-bg: #22201A;
+    --container-bg: #302C21;
+
+    --pages-menu-bg: #22201A;
+    --pages-menu-a-color: black;
+    --pages-menu-a-bg: white;
+
+    --info-color: white;
+
+    --btn-red: #FF4040;
+    --btn-green: #40FF40;
+    --brn-blue:#4040FF;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    font-family: Arial;
+
+    background-color: var(--page-bg);
+}
+
+.navbar {
+    width: 100%;
+    height: 100px;
+
+    background-color: var(--navbar-bg);
+}
+
+.input-box {
+    width: 100%;
+    display: block;
+
+    height: 20px;
+}
+
+.input-box input {
+    width: 80%;
+    height: 20px;
+    display: inline-block;
+    outline: 0;
+}
+
+.input-box button {
+    width: 18%;
+    height: 20px;
+    margin: 0;
+    padding: 0;
+
+    display: inline-block;
+
+    border: none;
+    cursor: pointer;
+}
+
+.container {
+    max-width: 960px;
+    min-height: 100px;
+
+    padding: 10px;
+    margin: auto;
+
+    background-color: var(--container-bg);
+}
+
+.container-navbar {
+    max-width: 960px;
+    min-height: 100px;
+
+    padding: 10px;
+    margin: auto;
+}
+
+.logo-image {
+    width: 100px;
+    height: 40px;
+    display: block;
+
+    margin: auto;
+    margin-bottom: 10px;
+}
+
+.auto-image {
+    border-radius: 4px;
+    width: 200px;
+    height: 160px;
+}
+
+.auto-image-center {
+    display: block;
+    margin: auto;
+    width: auto;
+}
+
+.center-info {
+    color: var(--info-color);
+    max-width: 400px;
+    display: block;
+
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 10px;
+    margin-bottom: 10px;
+
+    padding: 5px;
+
+    border-radius: 8px;
+    border: 1px solid var(--info-color);
+}
+
+.auto-list li .auto-image {
+    margin-top: 10px;
+    margin-left: 10px;
+}
+
+.auto-list li div {
+    display: inline-block;
+    height: 160px;
+    padding: 20px;
+}
+
+.auto-list li .pages {
+    height: auto;
+    margin: auto;
+    background-color: var(--pages-menu-bg);
+}
+
+.pages a {
+    color: var(--pages-menu-a-color);
+    text-decoration: none;
+    padding: 3px;
+    background-color: var(--pages-menu-a-bg);
+}
+
+.pages a.space {
+    margin-left: 20px;
+}
+
+.auto-list li .left {
+    width: 220px;
+    padding: 0;
+}
+
+.auto-list li .center {
+    width: calc(100% - 320px);
+}
+
+.auto-list li .right {
+    width: 100px;
+    height: 50px;
+    margin-top: 80px;
+}
+
+.auto-list li .center p {
+    color: var(--info-color);
+}
+
+/* BUTTONS */
+
+.btn {
+    border: none;
+    cursor: pointer;
+    padding: 10px;
+
+    outline: 0;
+
+    border-radius: 4px;
+}
+
+.btn-center {
+    display: block;
+    margin: auto;
+}
+
+.btn-red {
+    background-color: var(--btn-red);
+}
+
+.btn-green {
+    background-color: var(--btn-green);
+}
+
+.btn-blue {
+    background-color: var(--brn-blue);
+}
+
+.btn-m {
+    margin-top: 5px;
+}
+
+/*
+    Usage:
+    <ul class="auto-list">
+        <li> ... </li>
+        <li> ... </li>
+    </ul>
+*/
+
+.auto-list {
+    margin: 0;
+    padding: 0;
+    list-style-type: none;
+
+    position: relative;
+}
+
+.auto-list li {
+    width: 100%;
+    display: flex;
+}

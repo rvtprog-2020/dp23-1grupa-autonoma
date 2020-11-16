@@ -1,0 +1,23 @@
+[
+    {
+        "name": "Audi 80",
+        "image": "audi.jpg",
+        "mileage": 455000,
+        "seats": 4,
+        "price": 6
+    },
+    {
+        "name": "CitroenXsara",
+        "image": "citroen.jpg",
+        "mileage": 290000,
+        "seats": 4,
+        "price": 7
+    },
+    {
+        "name": "VolksWagen Golf 3",
+        "image": "golf.jpg",
+        "mileage": 300000,
+        "seats": 4,
+        "price": 4
+    }
+]
