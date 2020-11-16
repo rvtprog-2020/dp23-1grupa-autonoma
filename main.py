@@ -40,7 +40,7 @@ def car_by_id(id):
 
 @app.route("/cars")
 def cars_list():
-    cars_in_page = cars[:3]
+    cars_in_page = cars
     print(cars_in_page)
     return render_template("cars_list.html", cars=cars_in_page)
 
