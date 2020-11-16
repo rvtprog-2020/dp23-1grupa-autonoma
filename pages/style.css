@@ -13,6 +13,33 @@ body {
     background-color: #22201A;
 }
 
+.input-box {
+    width: 100%;
+    display: block;
+
+    height: 20px;
+}
+
+.input-box input {
+    width: 80%;
+    height: 20px;
+    display: inline-block;
+}
+
+.input-box button {
+    width: 18%;
+    height: 20px;
+    margin: 0;
+    padding: 0;
+
+    display: inline-block;
+
+    border: none;
+    cursor: pointer;
+
+    background-color: #00FF00;
+}
+
 .container {
     max-width: 960px;
     min-height: 100px;
@@ -21,6 +48,23 @@ body {
     margin: auto;
 
     background-color: #302C21;
+}
+
+.container-navbar {
+    max-width: 960px;
+    min-height: 100px;
+
+    padding: 10px;
+    margin: auto;
+}
+
+.logo-image {
+    width: 100px;
+    height: 40px;
+    display: block;
+
+    margin: auto;
+    margin-bottom: 10px;
 }
 
 .auto-image {
@@ -73,6 +117,10 @@ body {
     width: 100px;
     height: 50px;
     margin-top: 80px;
+}
+
+.auto-list li .center p {
+    color: #BBBBBB;
 }
 
 .btn {
