@@ -44,7 +44,8 @@ def car_reserve(id):
 
 @app.route("/reserved")
 def reserved_cars_list():
-    return render_template("reserved_cars_list.html")
+    cars_in_page = [ car for car in cars if 'reserved' in car ]
+    return render_template("reserved_cars_list.html", cars=cars_in_page)
 
 @app.route("/admin/cars")
 def admin_cars_list():

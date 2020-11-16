@@ -2,20 +2,22 @@
 
 {% block content %}
 <ul class="auto-list">
+    {% for car in cars %}
     <li>
         <div class="left">
-            <img src="../../../images/audi.jpg" alt="" class="auto-image">
+            <img src="{{ url_for('static', filename='images/' + car.image) }}" alt="" class="auto-image">
         </div>
         <div class="center">
-            <p>Audi 80</p>
-            <p>Nobraukums: 455'000km</p>
-            <p>Sēdvietas: 4</p>
-            <p>Cena: 6€ / diena</p>
+            <p>{{ car.name }}</p>
+            <p>Nobraukums: {{ car.mileage }} km</p>
+            <p>Sēdvietas: {{ car.seats }}</p>
+            <p>Cena: {{ car.price }}€ / diena</p>
         </div>
         <div class="right">
             <button class="btn btn-red">Noņemt</button>
             <button class="btn btn-blue">Rediģēt</button>
         </div>
     </li>
+    {% endfor %}
 </ul>
 {% endblock %}
