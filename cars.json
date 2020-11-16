@@ -1,0 +1,20 @@
+[
+    {
+        "name": "Audi 80",
+        "mileage": 455000,
+        "seats": 4,
+        "price": 6
+    },
+    {
+        "name": "CitroenXsara",
+        "mileage": 290000,
+        "seats": 4,
+        "price": 7
+    },
+    {
+        "name": "VolksWagen Golf 3",
+        "mileage": 300000,
+        "seats": 4,
+        "price": 4
+    }
+]

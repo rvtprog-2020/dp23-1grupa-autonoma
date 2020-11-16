@@ -1,27 +1,18 @@
 from flask import Flask, render_template, request
+import json
 
 app = Flask(__name__)
 
-cars = [
-    {
-        "name": "Audi 80",
-        "mileage": 455000,
-        "seats": 4,
-        "price": 6,
-    },
-    {
-        "name": "CitroenXsara",
-        "mileage": 290000,
-        "seats": 4,
-        "price": 7,
-    },
-    {
-        "name": "VolksWagen Golf 3",
-        "mileage": 300000,
-        "seats": 4,
-        "price": 4,
-    },
-]
+def load_cars():
+    print("Loading cars...")
+    try:
+        return json.load(open("cars.json"))
+    except:
+        return []
+
+cars = load_cars()
+
+print(cars)
 
 @app.route('/')
 def home():
