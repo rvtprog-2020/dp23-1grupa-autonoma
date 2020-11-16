@@ -14,7 +14,7 @@
             <p>Cena: {{ car.price }}€ / diena</p>
         </div>
         <div class="right">
-            <button class="btn btn-blue">Rezervēt</button>
+            <a href="/car/{{ car.id }}/reserve" class="btn btn-blue">Rezervēt</a>
         </div>
     </li>
     {% endfor %}

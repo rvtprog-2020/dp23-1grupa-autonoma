@@ -6,8 +6,16 @@ app = Flask(__name__)
 def load_cars():
     print("Loading cars...")
     try:
-        return json.load(open("cars.json"))
-    except:
+        data = json.load(open("cars.json"))
+
+        for car in data:
+            car["id"] = data.index(car)
+
+        print(data)
+
+        return data
+    except Exception as e:
+        print(e)
         return []
 
 cars = load_cars()
