@@ -4,7 +4,8 @@
         "image": "audi.jpg",
         "mileage": 455000,
         "seats": 4,
-        "price": 6
+        "price": 6,
+        "reserved": true
     },
     {
         "name": "CitroenXsara",
@@ -18,6 +19,7 @@
         "image": "golf.jpg",
         "mileage": 300000,
         "seats": 4,
-        "price": 4
+        "price": 4,
+        "reserved": true
     }
 ]
