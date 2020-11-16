@@ -50,9 +50,11 @@ def reserved_cars_list():
 def admin_cars_list():
     return render_template("admin/cars_list.html")
 
-@app.route("/admin/car/0/edit")
-def admin_car_edit():
-    return render_template("admin/car_edit.html")
+@app.route("/admin/car/<id>")
+def admin_car_info(id):
+    car = find_car_by_id(id)
+    if not car: return "404"
+    return render_template("admin/car_info.html", car=car)
 
 @app.route("/debug")
 def debug():
