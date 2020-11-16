@@ -48,7 +48,9 @@ def reserved_cars_list():
 
 @app.route("/admin/cars")
 def admin_cars_list():
-    return render_template("admin/cars_list.html")
+    cars_in_page = cars[:3]
+    print(cars_in_page)
+    return render_template("admin/cars_list.html", cars=cars_in_page)
 
 @app.route("/admin/car/<id>")
 def admin_car_info(id):
