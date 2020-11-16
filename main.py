@@ -50,5 +50,9 @@ def admin_cars_list():
 def admin_car_edit():
     return render_template("admin/car_edit.html")
 
+@app.route("/debug")
+def debug():
+    return render_template("debug.html")
+
 if __name__ == '__main__':
     app.run(port=80, debug=True)
