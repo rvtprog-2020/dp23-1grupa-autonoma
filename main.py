@@ -12,8 +12,6 @@ def load_cars():
 
 cars = load_cars()
 
-print(cars)
-
 @app.route('/')
 def home():
     return render_template('home.html')
