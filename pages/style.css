@@ -24,6 +24,7 @@ body {
     width: 80%;
     height: 20px;
     display: inline-block;
+    outline: 0;
 }
 
 .input-box button {
@@ -36,10 +37,6 @@ body {
 
     border: none;
     cursor: pointer;
-
-    outline: 0;
-
-    background-color: #00FF00;
 }
 
 .container {
@@ -70,6 +67,7 @@ body {
 }
 
 .auto-image {
+    border-radius: 4px;
     width: 200px;
     height: 160px;
 }
@@ -92,6 +90,7 @@ body {
 
     padding: 5px;
 
+    border-radius: 8px;
     border: 1px solid white;
 }
 
@@ -142,18 +141,33 @@ body {
     color: #BBBBBB;
 }
 
+/* BUTTONS */
+
 .btn {
-    background-color: #FF0000;
     border: none;
     cursor: pointer;
     padding: 10px;
 
     outline: 0;
+
+    border-radius: 4px;
 }
 
 .btn-center {
     display: block;
     margin: auto;
+}
+
+.btn-red {
+    background-color: #FF4040;
+}
+
+.btn-green {
+    background-color: #00FF00;
+}
+
+.btn-blue {
+    background-color: #4040FF;
 }
 
 .btn-m {
