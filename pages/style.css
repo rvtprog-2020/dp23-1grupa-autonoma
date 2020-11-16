@@ -37,6 +37,8 @@ body {
     border: none;
     cursor: pointer;
 
+    outline: 0;
+
     background-color: #00FF00;
 }
 
@@ -145,6 +147,8 @@ body {
     border: none;
     cursor: pointer;
     padding: 10px;
+
+    outline: 0;
 }
 
 .btn-center {
