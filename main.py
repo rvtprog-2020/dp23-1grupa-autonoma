@@ -1,7 +1,10 @@
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, redirect
 import json
+import math
 
 app = Flask(__name__)
+
+# CARS LIST
 
 def load_cars():
     print("Loading cars...")
@@ -28,6 +31,34 @@ def find_car_by_id(id):
             return None
     return cars[id] if id >= 0 and id < len(cars) else None
 
+# PAGES
+
+def generate_pages():
+    pages = []
+    pages_count = math.ceil(len(cars) / 3)
+
+    for i in range(pages_count):
+        page = [ cars[i * 3] ]
+
+        if (i * 3 + 1 < len(cars)):
+            page.append(cars[i * 3 + 1])
+        if (i * 3 + 2 < len(cars)):
+            page.append(cars[i * 3 + 2])
+        
+        pages.append(page)
+
+    return pages
+
+pages = generate_pages()
+
+def get_page_by_id(id):
+    if type(id) == str:
+        try:
+            id = int(id)
+        except:
+            return None
+    return pages[id] if id >= 0 and id < len(pages) else None
+
 @app.route('/')
 def home():
     return render_template('home.html')
@@ -38,11 +69,16 @@ def car_by_id(id):
     if not car: return "404"
     return render_template("car_info.html", car=car)
 
-@app.route("/cars")
-def cars_list():
-    cars_in_page = cars
+@app.route("/cars/<page_id>")
+def cars_list(page_id):
+    page = get_page_by_id(page_id)
+    cars_in_page = page
     print(cars_in_page)
-    return render_template("cars_list.html", cars=cars_in_page)
+    return render_template("cars_list.html", cars=cars_in_page, pages=pages)
+
+@app.route("/cars")
+def cars_list_zero():
+    return cars_list(0)
 
 @app.route("/car/<id>/reserve")
 def car_reserve(id):

@@ -20,10 +20,9 @@
     {% endfor %}
     <li>
         <div class="pages">
-            <a href="#" class="btn">1</a>
-            <a href="#" class="btn">2</a>
-            <a href="#" class="btn">3</a>
-            <a href="#" class="space btn">42</a>
+            {% for page in pages %}
+            <a href="/cars/{{ pages.index(page) }}" class="btn">{{ pages.index(page) + 1 }}</a>
+            {% endfor %}
         </div>
     </li>
 </ul>
