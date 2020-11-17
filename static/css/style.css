@@ -177,15 +177,15 @@ body {
 }
 
 .btn-red {
-    background-color: var(--btn-red);
+    background-color: var(--btn-red) !important;
 }
 
 .btn-green {
-    background-color: var(--btn-green);
+    background-color: var(--btn-green) !important;
 }
 
 .btn-blue {
-    background-color: var(--brn-blue);
+    background-color: var(--brn-blue) !important;
 }
 
 .btn-m {

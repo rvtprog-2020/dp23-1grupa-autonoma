@@ -1,4 +1,4 @@
-from flask import Flask, render_template
+from flask import Flask, render_template, redirect
 import json
 import math
 
@@ -72,9 +72,12 @@ def car_by_id(id):
 @app.route("/cars/<page_id>")
 def cars_list(page_id):
     page = get_page_by_id(page_id)
+    
+    if not page: return redirect("/cars")
+
     cars_in_page = page
     print(cars_in_page)
-    return render_template("cars_list.html", cars=cars_in_page, pages=pages)
+    return render_template("cars_list.html", cars=cars_in_page, pages=pages, page_id = int(page_id))
 
 @app.route("/cars")
 def cars_list_zero():

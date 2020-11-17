@@ -21,7 +21,8 @@
     <li>
         <div class="pages">
             {% for page in pages %}
-            <a href="/cars/{{ pages.index(page) }}" class="btn">{{ pages.index(page) + 1 }}</a>
+            {% set index = pages.index(page) %}
+            <a href="/cars/{{ index }}" class="btn {% if index == page_id %}btn-blue{% endif %}">{{ index + 1 }}</a>
             {% endfor %}
         </div>
     </li>
