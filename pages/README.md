@@ -1,0 +1,1 @@
+Tas ir veca mape. Visi faili jau ir pārvietoti un pārtaisīti uz /templates.
