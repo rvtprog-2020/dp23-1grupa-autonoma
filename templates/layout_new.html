@@ -14,7 +14,6 @@
         <div class="navbar">
             <div class="container-navbar">
                 <img src="{{ url_for('static', filename='images/logo.jpg') }}" alt="" class="logo-image">
-
                 <div class="input-box">
                     <input type="text">
                     <button type="button" class="btn btn-green">Meklēt</button>
@@ -25,6 +24,7 @@
 
         <div class="container">
             {% block content %}
+
             {% endblock %}
         </div>
         {% endblock %}

@@ -1,10 +1,39 @@
-{% extends "layout.html" %}
+{% extends "layout_new.html" %}
 
-{% block saturs %}
-<div>
-   Test
-<h1> test :DDD</h1> 
+{% block content %}
+
+<div class="container" style="color: white;">
+   <h2>
+      Sveicināti Autonomā!
+   </h2>
+   <p>
+      Mēs iznomājam automašīnas ar mērķi, lai nodrošinātu ikvienu ar kārtīgu motoru.
+   </p>
 </div>
 
+<div>
+   <button> <a href="/cars">Auto saraksts</a> </button>
+   <button> <a href="/reserved">Rezervēto auto saraksts</a> </button>
+</div>
+
+<div style="color: red; font-size: small;">
+   <p>Zem šī paziņojuma seko administrācijas lapas!</p>
+   <p>Neautorizēta piekļuve novedīs pie dranķīgas omas!</p>
+   <button> <a href="/admin/cars"> Auto saraksts </a> </button>
+   <button> <a href="/admin/car/0"> Pirmā automašīna </a> </button>
+   <button> <a href="/admin/car/1"> Otrā automašīna </a> </button>
+   <button> <a href="/admin/car/2"> Trešā automašīna </a> </button>
+   <button> <a href="/admin/car/3"> Ceturtā automašīna </a> </button>
+</div>
+
+<!-- This is some credits stuff, neat for aesthetics  -->
+<div style="font-size: smaller; font-style: italic; color: gold;">
+<p>
+   Paldies SS.com komandai par automašīnu bildēšanu un piegādi!!
+</p>
+<p>
+   Paldies Miķelim par logo resursiem!
+</p>
+</div>
 
 {% endblock %}
