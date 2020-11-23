@@ -1,8 +1,16 @@
 {% extends "layout_new.html" %}
 
+{% block head %}
+
+{{ super() }}
+
+<script src="{{ url_for('static', filename='js/load_cars.js') }}"></script>
+
+{% endblock %}
+
 {% block content %}
-<ul class="auto-list">
-    {% for car in cars%}
+<ul class="auto-list" id="auto-list">
+    <!--{% for car in cars%}
     <li>
         <div class="left">
             <img src="{{ url_for('static', filename='images/' + car.image) }}" alt="" class="auto-image">
@@ -18,13 +26,13 @@
         </div>
     </li>
     {% endfor %}
-    <li>
+    <li> !!!!=====TODO: FIX PAGINATION====!!!
         <div class="pages">
             {% for page in pages %}
             {% set index = pages.index(page) %}
             <a href="/cars/{{ index }}" class="btn {% if index == page_id %}btn-blue{% endif %}">{{ index + 1 }}</a>
             {% endfor %}
         </div>
-    </li>
+    </li>-->
 </ul>
 {% endblock %}

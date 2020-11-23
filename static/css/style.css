@@ -157,6 +157,13 @@ body {
     color: var(--info-color);
 }
 
+.car-link {
+    text-decoration: none;
+    color: #4040FF;
+    background-color: white;
+    border-radius: 5px;
+}
+
 /* BUTTONS */
 
 .btn {

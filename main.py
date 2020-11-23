@@ -71,13 +71,14 @@ def car_by_id(id):
 
 @app.route("/cars/<page_id>")
 def cars_list(page_id):
-    page = get_page_by_id(page_id)
+    #page = get_page_by_id(page_id)
     
-    if not page: return redirect("/cars")
+    #if not page: return redirect("/cars")
 
-    cars_in_page = page
-    print(cars_in_page)
-    return render_template("cars_list.html", cars=cars_in_page, pages=pages, page_id = int(page_id))
+    #cars_in_page = page
+    #print(cars_in_page)
+    #return render_template("cars_list.html", cars=cars_in_page, pages=pages, page_id = int(page_id))
+    return render_template("cars_list.html")
 
 @app.route("/cars")
 def cars_list_zero():
@@ -110,7 +111,7 @@ def admin_car_info(id):
 def debug():
     return render_template("debug.html")
 
-@app.route("/get_cars_page", methods=["GET"])
+@app.route("/get_cars_page", methods=["POST"])
 def get_cars_page():
     if not request.content_type == "application/json": return { "code": 400, "msg": "Unknown request type" }
 

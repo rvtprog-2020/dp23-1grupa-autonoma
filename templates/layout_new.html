@@ -1,16 +1,18 @@
 <!DOCTYPE html>
 <html lang="lv">
     <head>
+        {% block head %}
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>AutoNomas Auto informācija</title>
 
         <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+        {% endblock %}
     </head>
     <body>
         {% block body %}
 
-        {% block navbar%}
+        {% block navbar %}
         <div class="navbar">
             <div class="container-navbar">
                 <img src="{{ url_for('static', filename='images/logo.jpg') }}" alt="" class="logo-image">
