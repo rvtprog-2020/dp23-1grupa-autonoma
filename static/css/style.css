@@ -20,6 +20,8 @@ body {
     font-family: Arial;
 
     background-color: var(--page-bg);
+
+    color: white;
 }
 
 .navbar {
@@ -71,6 +73,22 @@ body {
 
     padding: 10px;
     margin: auto;
+}
+
+.container-header {
+    text-align: center;
+    margin-bottom: 60px;
+}
+
+.text-small-info {
+    color: red;
+    font-size: small;
+}
+
+.text-small-credit {
+    font-size: smaller;
+    font-style: italic;
+    color: gold;
 }
 
 .logo-image {
