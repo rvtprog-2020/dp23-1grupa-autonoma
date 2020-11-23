@@ -1,4 +1,4 @@
-from flask import Flask, render_template, redirect
+from flask import Flask, render_template, redirect, request
 import json
 import math
 
@@ -109,6 +109,24 @@ def admin_car_info(id):
 @app.route("/debug")
 def debug():
     return render_template("debug.html")
+
+@app.route("/get_cars_page", methods=["GET"])
+def get_cars_page():
+    if not request.content_type == "application/json": return { "code": 400, "msg": "Unknown request type" }
+
+    try:
+        jsonData = request.json
+        page = get_page_by_id(jsonData["page_id"])
+        
+        if not page: return { "code": 404, "msg": "Page not found" }
+
+        return {
+            "code": 200,
+            "page": page,
+        }
+    except Exception as e:
+        print(e)
+        return { "code": 500, "msg": "Error" }
 
 if __name__ == '__main__':
     app.run(port=80, debug=True)
