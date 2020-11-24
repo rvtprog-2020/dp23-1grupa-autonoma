@@ -71,14 +71,14 @@ def car_by_id(id):
 
 @app.route("/cars/<page_id>")
 def cars_list(page_id):
-    #page = get_page_by_id(page_id)
+    page = get_page_by_id(page_id)
     
-    #if not page: return redirect("/cars")
+    if not page: return redirect("/cars")
 
-    #cars_in_page = page
-    #print(cars_in_page)
-    #return render_template("cars_list.html", cars=cars_in_page, pages=pages, page_id = int(page_id))
-    return render_template("cars_list.html")
+    cars_in_page = page
+
+    return render_template("cars_list.html", cars=cars_in_page, pages=pages, page_id = int(page_id))
+    #return render_template("cars_list.html")
 
 @app.route("/cars")
 def cars_list_zero():

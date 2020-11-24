@@ -8,5 +8,6 @@
     <p>Sēdvietas: {{ car.seats }}</p>
     <p>Cena: {{ car.price }}€ / diena</p>
 </div>
-<button class="btn btn-blue btn-center">Rezervēt</button>
+<a href="/car/{{ car.id }}/reserve" class="btn btn-blue btn-center btn-m">Rezervēt</button>
+<a href="/cars" class="btn btn-red btn-center btn-m">Atpakaļ</a>
 {% endblock %}

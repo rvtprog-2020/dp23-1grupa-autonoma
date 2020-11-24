@@ -1,6 +1,17 @@
 {% extends "layout.html" %}
 
+{% block head %}
+
+{{ super() }}
+
+<script src="{{ url_for('static', filename='js/reserve.js') }}"></script>
+
+{% endblock %}
+
 {% block content %}
+<script>
+    setPrice({{ car.price }});
+</script>
 <div class="container">
     <img src="{{ url_for('static', filename='images/' + car.image) }}" alt="" class="auto-image auto-image-center">
     <div class="center-info">
@@ -9,8 +20,15 @@
         <p>Sēdvietas: {{ car.seats }}</p>
         <p>Cena: {{ car.price }}€ / diena</p>
     </div>
-    <button class="btn btn-green btn-center btn-m">Rezervēt</button>
-    <button class="btn btn-blue btn-center btn-m">Rediģēt</button>
-    <button class="btn btn-red btn-center btn-m">Atcelt</button>
+
+    <input id="slider-days" type="range" min="1" max="30" onchange="changeSlider(this.value)" oninput="changeSlider(this.value)">
+
+    <div id="reserve-info" class="center-info hidden">
+        <p>Dienas: <span id="reserve-days"></span></p>
+        <p>Cena: <span id="reserve-price"></span></p>
+    </div>
+
+    <button class="btn btn-green btn-center btn-m" onclick="reserveCar()">Rezervēt</button>
+    <a href="/car/{{ car.id }}" class="btn btn-red btn-center btn-m">Atcelt</a>
 </div>
 {% endblock %}
