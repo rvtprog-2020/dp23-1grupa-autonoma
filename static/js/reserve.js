@@ -24,6 +24,24 @@ function changeSlider(value) {
     reservePrice.innerText = value + " * " + carPrice + "€ = " + value * carPrice + "€";
 }
 
-function reserveCar() {
-    
+async function reserveCar(car_id) {
+    let response = await fetch("http://localhost/reserve_car", {
+        method: "POST",
+        headers: {
+            "Accept": "application/json",
+            "Content-type": "application/json"
+        },
+        body: JSON.stringify({
+            "car_id": car_id,
+            "days": parseInt(days)
+        })
+    });
+    let data = await response.json();
+    console.log(data);
+
+    if (data.code == 200) {
+        window.location.href = "/reserved";
+    } else {
+        alert(data.msg);
+    }
 }

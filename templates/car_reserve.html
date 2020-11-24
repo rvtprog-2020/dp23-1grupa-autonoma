@@ -28,7 +28,7 @@
         <p>Cena: <span id="reserve-price"></span></p>
     </div>
 
-    <button class="btn btn-green btn-center btn-m" onclick="reserveCar()">Rezervēt</button>
+    <button class="btn btn-green btn-center btn-m" onclick="reserveCar({{ car.id }})">Rezervēt</button>
     <a href="/car/{{ car.id }}" class="btn btn-red btn-center btn-m">Atcelt</a>
 </div>
 {% endblock %}

@@ -31,6 +31,8 @@ def find_car_by_id(id):
             return None
     return cars[id] if id >= 0 and id < len(cars) else None
 
+reserved_cars = []
+
 # PAGES
 
 def generate_pages():
@@ -92,7 +94,7 @@ def car_reserve(id):
 
 @app.route("/reserved")
 def reserved_cars_list():
-    cars_in_page = [ car for car in cars if 'reserved' in car ]
+    cars_in_page = [ cars[car_id] for car_id in reserved_cars ]
     return render_template("reserved_cars_list.html", cars=cars_in_page)
 
 @app.route("/admin/cars")
@@ -128,6 +130,31 @@ def get_cars_page():
     except Exception as e:
         print(e)
         return { "code": 500, "msg": "Error" }
+
+@app.route("/reserve_car", methods=["POST"])
+def reserve_car_post():
+    if not request.content_type == "application/json": return { "code": 400, "msg": "Unknown request type" }
+
+    try:
+        jsonData = request.json
+        car_id = jsonData["car_id"]
+        days = jsonData["days"]
+
+        print(car_id)
+        print(days)
+        
+        if type(days) != int or days <= 0 or days > 30: return { "code": 400, "msg": "Uncorrect days count " + str(days) }
+
+        if type(car_id) != int or find_car_by_id(car_id) == None: return { "code": 400, "msg": "Uncorrect car id" }
+
+        if car_id in reserved_cars: return { "code": 400, "msg": "Car already in reserved cars list" } 
+
+        reserved_cars.append(car_id)
+
+        return { "code": 200, "msg": ":)" }
+    except Exception as e:
+        print(e)
+        return { "code": 500, "msg": str(e) }
 
 if __name__ == '__main__':
     app.run(port=80, debug=True)
