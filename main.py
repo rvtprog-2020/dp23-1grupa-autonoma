@@ -70,11 +70,15 @@ def add_reservation(car_id, days, price):
     save_reservations()
 
 def remove_reservation(car_id):
+    print(car_id)
     index = -1
-    for reserv in reserved_cars:
-        if reserv.car_id == car_id:
-            index = reserved_cars.index(reserv)
-    del reserved_cars[index]
+
+    for i in range(len(reserved_cars)):
+        if reserved_cars[i].car_id == car_id:
+            index = i
+
+    print(index)
+    reserved_cars.pop(index)
     save_reservations()
 
 # PAGES
@@ -209,13 +213,11 @@ def remove_car_post():
         jsonData = request.json
         car_id = jsonData["car_id"]
 
-        print(car_id)
+        car = find_car_by_id(car_id)
 
-        if type(car_id) != int or find_car_by_id(car_id) == None: return { "code": 400, "msg": "Uncorrect car id" }
+        if not car: return { "code": 400, "msg": "Uncorrect car id" }
 
-        if not car_id in reserved_cars: return { "code": 400, "msg": "Car is not in reserve" }
-
-        add_reservation(car_id, days, days * find_car_by_id(car_id)["price"])
+        remove_reservation(car_id)
 
         return { "code": 200, "msg": ":)" }
     except Exception as e:
