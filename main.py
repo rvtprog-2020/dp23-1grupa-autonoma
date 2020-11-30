@@ -69,6 +69,14 @@ def add_reservation(car_id, days, price):
     reserved_cars.append(Reservation(car_id, days, price))
     save_reservations()
 
+def remove_reservation(car_id):
+    index = -1
+    for reserv in reserved_cars:
+        if reserv.car_id == car_id:
+            index = reserved_cars.index(reserv)
+    del reserved_cars[index]
+    save_reservations()
+
 # PAGES
 
 def generate_pages():
@@ -185,6 +193,27 @@ def reserve_car_post():
         if type(car_id) != int or find_car_by_id(car_id) == None: return { "code": 400, "msg": "Uncorrect car id" }
 
         if car_id in reserved_cars: return { "code": 400, "msg": "Car already in reserved cars list" }
+
+        add_reservation(car_id, days, days * find_car_by_id(car_id)["price"])
+
+        return { "code": 200, "msg": ":)" }
+    except Exception as e:
+        print(e)
+        return { "code": 500, "msg": str(e) }
+
+@app.route("/remove_car", methods=["POST"])
+def remove_car_post():
+    if not request.content_type == "application/json": return { "code": 400, "msg": "Unknown request type" }
+
+    try:
+        jsonData = request.json
+        car_id = jsonData["car_id"]
+
+        print(car_id)
+
+        if type(car_id) != int or find_car_by_id(car_id) == None: return { "code": 400, "msg": "Uncorrect car id" }
+
+        if not car_id in reserved_cars: return { "code": 400, "msg": "Car is not in reserve" }
 
         add_reservation(car_id, days, days * find_car_by_id(car_id)["price"])
 

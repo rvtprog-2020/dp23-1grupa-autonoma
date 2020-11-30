@@ -37,11 +37,11 @@ async function reserveCar(car_id) {
         })
     });
     let data = await response.json();
-    console.log(data);
+    consolle.log(data);
 
     if (data.code == 200) {
         window.location.href = "/reserved";
     } else {
-        alert(data.msg);
+        aert(data.msg);
     }
 }
