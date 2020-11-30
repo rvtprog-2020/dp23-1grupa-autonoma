@@ -2,13 +2,13 @@
 
 {% block content %}
 <ul class="auto-list">
-    {% for car in cars %}
+    {% for car, days, price in reserved_cars %}
     <li>
         <div class="left">
             <img src="{{ url_for('static', filename='images/' + car.image) }}" alt="" class="auto-image">
         </div>
         <div class="center">
-            <p>{{ car.name }}</p>
+            <p>{{ car.name }} ir rezervēta {{ days }} dienas par {{ price }}€</p>
             <p>Nobraukums: {{ car.mileage }} km</p>
             <p>Sēdvietas: {{ car.seats }}</p>
             <p>Cena: {{ car.price }}€ / diena</p>

@@ -31,7 +31,43 @@ def find_car_by_id(id):
             return None
     return cars[id] if id >= 0 and id < len(cars) else None
 
-reserved_cars = []
+# RESERVATION LOAD, SAVE AND APPEND
+
+class Reservation:
+    def __init__(self, car_id, days, price):
+        self.car_id = car_id
+        self.days = days
+        self.price = price
+
+def load_reservations():
+    print("Loading reservations...")
+    try:
+        jsonData = json.load(open("reservations.json"))
+        data = []
+
+        for i in jsonData:
+            data.append(Reservation(i.car_id, i.days, i.price))
+
+        return data
+    except Exception as e:
+        print(e)
+        return []
+
+reserved_cars = load_reservations()
+
+def save_reservations():
+    print("Saving reservations...")
+
+    jsonData = []
+
+    for i in reserved_cars:
+        jsonData.append({"car_id": i.car_id, "days": i.days, "price": i.price})
+
+    json.dump(jsonData, open("reservations.json", "w"))
+
+def add_reservation(car_id, days, price):
+    reserved_cars.append(Reservation(car_id, days, price))
+    save_reservations()
 
 # PAGES
 
@@ -77,10 +113,7 @@ def cars_list(page_id):
     
     if not page: return redirect("/cars")
 
-    cars_in_page = page
-
-    return render_template("cars_list.html", cars=cars_in_page, pages=pages, page_id = int(page_id))
-    #return render_template("cars_list.html")
+    return render_template("cars_list.html", cars=page, pages=pages, page_id = int(page_id))
 
 @app.route("/cars")
 def cars_list_zero():
@@ -94,8 +127,12 @@ def car_reserve(id):
 
 @app.route("/reserved")
 def reserved_cars_list():
-    cars_in_page = [ cars[car_id] for car_id in reserved_cars ]
-    return render_template("reserved_cars_list.html", cars=cars_in_page)
+    reserved_cars_page = []
+
+    for i in reserved_cars:
+        reserved_cars_page.insert(1, [cars[i.car_id], i.days, i.price])
+
+    return render_template("reserved_cars_list.html", reserved_cars=reserved_cars_page)
 
 @app.route("/admin/cars")
 def admin_cars_list():
@@ -147,9 +184,9 @@ def reserve_car_post():
 
         if type(car_id) != int or find_car_by_id(car_id) == None: return { "code": 400, "msg": "Uncorrect car id" }
 
-        if car_id in reserved_cars: return { "code": 400, "msg": "Car already in reserved cars list" } 
+        if car_id in reserved_cars: return { "code": 400, "msg": "Car already in reserved cars list" }
 
-        reserved_cars.append(car_id)
+        add_reservation(car_id, days, days * find_car_by_id(car_id)["price"])
 
         return { "code": 200, "msg": ":)" }
     except Exception as e:
