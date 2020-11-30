@@ -46,7 +46,7 @@ def load_reservations():
         data = []
 
         for i in jsonData:
-            data.append(Reservation(i.car_id, i.days, i.price))
+            data.append(Reservation(i["car_id"], i["days"], i["price"]))
 
         return data
     except Exception as e:
