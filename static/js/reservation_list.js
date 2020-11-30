@@ -10,7 +10,7 @@ async function removeCar(car_id) {
         })
     });
     let data = await response.json();
-    consolle.log(data);
+    console.log(data);
 
     if (data.code == 200) {
         window.location.reload();
