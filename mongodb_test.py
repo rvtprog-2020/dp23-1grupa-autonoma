@@ -4,10 +4,11 @@ from pymongo import MongoClient
 
 def run():
     print("Running...")
+    username = "boss"
     password = "ZeP-iFc-jwZ-q46"
     dbname = "test"
 
-    client = MongoClient("mongodb://boss:" + password + "@test.839ly.mongodb.net/" + dbname + "?retryWrites=true&w=majority")
+    client = MongoClient("mongodb://" + username + ":" + password + "@test.839ly.mongodb.net/" + dbname + "?retryWrites=true&w=majority")
 
     print("\nClient:")
     print(client)
