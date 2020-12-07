@@ -5,14 +5,14 @@ from pymongo import MongoClient
 def run():
     print("Running...")
     password = "ZeP-iFc-jwZ-q46"
-    dbname = "cluster0"
+    dbname = "test"
 
-    client = MongoClient("mongodb://boss:" + password + "@cluster0.839ly.mongodb.net/" + dbname + "?retryWrites=true&w=majority")
+    client = MongoClient("mongodb://boss:" + password + "@test.839ly.mongodb.net/" + dbname + "?retryWrites=true&w=majority")
 
     print("\nClient:")
     print(client)
 
-    db = client['cluster0']
+    db = client[dbname]
 
     print("\nDB:")
     print(db)
