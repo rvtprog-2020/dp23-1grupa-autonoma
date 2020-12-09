@@ -3,7 +3,7 @@ from bson.json_util import dumps
 
 # TO INSTALL (WINDOWS):
 # USE: pip install pymongo[srv]
-# IF ALREADY EXISTS AT BEFORE INSTALLING: pip uninstall pymongo AND pip install dnspython
+# IF ALREADY EXISTS BEFORE INSTALLING: pip uninstall pymongo AND pip install dnspython
 
 def run():
     print("Running...")
