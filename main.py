@@ -32,16 +32,32 @@ def add_reservation(car_id, days, price):
         "price": price
     })
 
+def get_pages():
+    cars_list = list(cars_db.find())
+    pages_count = math.ceil(len(cars_list) / 4)
+    
+    pages_list = []
+
+    for i in range(pages_count):
+        pages_list.append([cars_list[j + i * 4] for j in range(4) if j + i * 4 < len(cars_list)])
+
+    return pages_list
+
+def get_page_by_id(page_id):
+    if type(page_id) == str:
+        try:
+            page_id = int(page_id)
+        except:
+            return None
+    if page_id >= 0:
+        pages = get_pages()
+        if page_id < len(pages):
+            return pages[page_id]
+        else:
+            return None
+
 def remove_reservation(car_id):
     reservations_db.remove({"car_id": ObjectId(car_id)})
-
-# PAGES
-
-def get_page_by_id(id):
-    if (type(id) == str):
-        try: id = int(id)
-        except: return None
-    return cars_db.find()
 
 @app.route('/')
 def home():
@@ -59,7 +75,7 @@ def cars_list(page_id):
     
     if not page: return redirect("/cars")
 
-    return render_template("cars_list.html", cars=page, pages=[], page_id = int(page_id))
+    return render_template("cars_list.html", cars=page, pages=get_pages(), page_id = int(page_id))
 
 @app.route("/cars")
 def cars_list_zero():
@@ -134,8 +150,6 @@ def reserve_car_post():
         finded_car = find_car_by_id(car_id)
 
         if not finded_car: return { "code": 400, "msg": "Uncorrect car id \"" + car_id + "\"" }
-
-        if car_id in reserved_cars: return { "code": 400, "msg": "Car already in reserved cars list" }
 
         add_reservation(car_id, days, days * finded_car["price"])
 

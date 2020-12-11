@@ -6,29 +6,19 @@ from bson.json_util import dumps
 # IF ALREADY EXISTS BEFORE INSTALLING: pip uninstall pymongo AND pip install dnspython
 
 def run():
-    print("Running...")
+    username = "boss"
     password = "ZeP-iFc-jwZ-q46"
+    cluster_name = "test"
     dbname = "test"
 
-    
-    client = MongoClient("mongodb+srv://boss:" + password + "@test.839ly.mongodb.net/" + dbname + "?retryWrites=true&w=majority")
+    print("Connecting mongodb...")
+    client = MongoClient("mongodb+srv://" + username + ":" + password + "@" + cluster_name + ".839ly.mongodb.net/" + dbname + "?retryWrites=true&w=majority")
 
-    print("\nClient:")
-    print(client)
+    db = client[dbname]
 
-    db = client.test
+    cars_db = db["cars"]
 
-    print("\nDB:")
-    print(db)
-
-    users_db = db["users"]
-
-    print("\nUsers DB:")
-    print(users_db)
-
-    print("Users:", dumps(users_db.find()))
-
-    users_db.insert_one({"name": "Kek", "surname": "Petrovich", "password": "qwerty12345"})
+    cars_db.insert_one({"name": "Nissan X-Trail", "image": "nissan", "milleage": 100000, "seats": 4, "price": 4})
 
 if __name__ == "__main__":
     run()
