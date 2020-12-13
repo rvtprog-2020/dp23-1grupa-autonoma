@@ -10,20 +10,20 @@
 
 {% block content %}
 <ul class="auto-list">
-    {% for car, days, price in reserved_cars %}
+    {% for car, days, price, reservation_id in reserved_cars %}
     <li>
         <div class="left">
             <img src="{{ url_for('static', filename='images/' + car.image) }}" alt="" class="auto-image">
         </div>
         <div class="center">
-            <p>{{ car.name }} ir rezervēta {{ days }} dienas par {{ price }}€</p>
+            <a class="car-link" href="/reserved/{{ reservation_id }}">{{ car.name }} ir rezervēta {{ days }} dienas par {{ price }}€</a>
             <p>Nobraukums: {{ car.mileage }} km</p>
             <p>Sēdvietas: {{ car.seats }}</p>
             <p>Cena: {{ car.price }}€ / diena</p>
         </div>
         <div class="right">
             <button onclick='removeCar("{{ car._id }}")' class="btn btn-red btn-m">Noņemt</button>
-            <button class="btn btn-blue btn-m">Rediģēt</button>
+            <a href="/reserved/{{ reservation_id | string }}/edit" class="btn btn-blue btn-m">Rediģēt</a>
         </div>
     </li>
     {% endfor %}

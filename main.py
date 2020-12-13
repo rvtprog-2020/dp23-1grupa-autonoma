@@ -32,6 +32,9 @@ def add_reservation(car_id, days, price):
         "price": price
     })
 
+def find_reservation(reservation_id):
+    return reservations_db.find_one({"_id": ObjectId(reservation_id)})
+
 def get_pages():
     cars_list = list(cars_db.find())
     pages_count = math.ceil(len(cars_list) / 4)
@@ -87,13 +90,29 @@ def car_reserve(id):
     if not car: return "404"
     return render_template("car_reserve.html", car=car)
 
+@app.route("/reserved/<reservation_id>")
+def view_reserved_car(reservation_id):
+    reservation = find_reservation(reservation_id)
+    
+    if not reservation: return redirect("/reserved")
+
+    return render_template("reserved_car.html", car = find_car_by_id(reservation["car_id"]), reservation = reservation)
+
+@app.route("/reserved/<reservation_id>/edit")
+def reserved_car_edit(reservation_id):
+    reservation = find_reservation(reservation_id)
+    
+    if not reservation: return redirect("/reserved")
+
+    return render_template("reserved_car_edit.html", car = find_car_by_id(reservation["car_id"]), reservation = reservation)
+
 @app.route("/reserved")
 def reserved_cars_list():
     reserved_cars = []
 
     for reservation in reservations_db.find():
         reservation_ent = [
-            find_car_by_id(reservation["car_id"]), reservation["days"], reservation["price"]
+            find_car_by_id(reservation["car_id"]), reservation["days"], reservation["price"], reservation["_id"]
         ]
         reserved_cars.append(reservation_ent)
 
@@ -151,6 +170,10 @@ def reserve_car_post():
 
         if not finded_car: return { "code": 400, "msg": "Uncorrect car id \"" + car_id + "\"" }
 
+        reservation = reservations_db.find_one({"car_id": ObjectId(car_id)})
+
+        if reservation: return { "code": 400, "msg": "Reservation at this car already exists" }
+
         add_reservation(car_id, days, days * finded_car["price"])
 
         return { "code": 200, "msg": ":)" }
@@ -174,6 +197,35 @@ def remove_car_post():
 
         return { "code": 200, "msg": ":)" }
     except Exception as e:
+        print(e)
+        return { "code": 500, "msg": str(e) }
+
+@app.route("/edit_reservation", methods=["POST"])
+def edit_reservation_post():
+    if not request.content_type == "application/json": return { "code": 400, "msg": "Unknown request type" }
+
+    try:
+        jsonData = request.json
+        reservation_id = jsonData["reservation_id"]
+
+        reservation = find_reservation(reservation_id)
+
+        if not reservation: return { "code": 400, "msg": "Kek 1" }
+
+        car = find_car_by_id(reservation["car_id"])
+
+        if not car: return { "code": 400, "msg": "Kek 2" }
+
+        remove_reservation(car["_id"])
+
+        reservation["days"] = jsonData["days"]
+        reservation["price"] = jsonData["days"] * car["price"]
+
+        reservations_db.insert_one(reservation)
+
+        return { "code": 200, "msg": ":)" }
+    except Exception as e:
+        print("Exception error:")
         print(e)
         return { "code": 500, "msg": str(e) }
 

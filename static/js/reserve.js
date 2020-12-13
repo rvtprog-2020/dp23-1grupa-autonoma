@@ -1,8 +1,13 @@
 var carPrice = 0;
 var days = 0;
+var reservationId = null;
 
 function setPrice(price) {
     carPrice = price;
+}
+
+function setReservationId(id) {
+    reservationId = id;
 }
 
 window.addEventListener("load", function() {
@@ -33,6 +38,32 @@ async function reserveCar(car_id) {
         },
         body: JSON.stringify({
             "car_id": car_id,
+            "days": parseInt(days)
+        })
+    });
+    let data = await response.json();
+    console.log(data);
+
+    if (data.code == 200) {
+        window.location.href = "/reserved";
+    } else {
+        alert(data.msg);
+    }
+}
+
+async function editCar(car_id) {
+    if (reservationId == null) {
+        return;
+    }
+
+    let response = await fetch("http://localhost/edit_reservation", {
+        method: "POST",
+        headers: {
+            "Accept": "application/json",
+            "Content-type": "application/json"
+        },
+        body: JSON.stringify({
+            "reservation_id": reservationId,
             "days": parseInt(days)
         })
     });
