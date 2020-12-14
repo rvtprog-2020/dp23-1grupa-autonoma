@@ -10,27 +10,43 @@
     setCarId("{{ car._id }}");
 </script>
 
-<img src="{{ url_for('static', filename='images/' + car.image) }}" alt="" class="auto-image auto-image-center">
+<img src="{{ car.image }}" alt="" class="auto-image auto-image-center">
 <div class="center-info">
     <p>{{ car.name }}</p>
     <p>Nobraukums: {{ car.mileage }} km</p>
     <p>Sēdvietas: {{ car.seats }}</p>
     <p>Cena: {{ car.price }}€ / diena</p>
+    <p>Rent Point: {{ car.rent_point.name }} - {{ car.rent_point.location }}</p>
 </div>
 
-Car Name:
+<label for="carName">Car Name</label>
 <input type="text" name="carName" id="carName" value="{{ car.name }}">
 <br>
-Car Mileage (km):
+
+<label for="carMileage">Car Mileage (km)</label>
 <input type="number" name="carMileage" id="carMileage" value="{{ car.mileage }}">
 <br>
-Car Seats:
+
+<label for="carSeats">Car Seats</label>
 <input type="number" name="carSeats" id="carSeats" value="{{ car.seats }}">
 <br>
-Car Price (€ / diena):
-<input type="number" name="carPrice" id="carPrice" value="{{ car.price }}">
 
-<button class="btn btn-blue btn-center btn-m" onclick='editCar("{{ car._id }}")'>Edit</button>
+<label for="carPrice">Car Price (€ / diena)</label>
+<input type="number" name="carPrice" id="carPrice" value="{{ car.price }}">
+<br>
+
+<label for="carImage">Car Image (URL)</label>
+<input type="url" name="carImage" id="carImage" value="{{ car.image }}">
+<br>
+
+<label for="rentPoint">Rent Point</label>
+<select name="rentPoint" id="rentPoint">
+    {% for rent_point in rent_points %}
+    <option value="{{ rent_point._id }}" {% if rent_point._id == car.rent_point._id %} selected {% endif %}>{{ rent_point.name}} - {{ rent_point.location }}</option>
+    {% endfor %}
+</select>
+
+<button class="btn btn-blue btn-center btn-m" onclick='editCar("{{ car._id }}")'>Rediģet</button>
 <a href="/admin/cars" class="btn btn-red btn-center btn-m">Atpakaļ</a>
 
 {% endblock %}

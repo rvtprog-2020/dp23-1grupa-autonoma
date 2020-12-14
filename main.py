@@ -6,21 +6,13 @@ from pymongo import MongoClient
 from bson.json_util import dumps
 from bson.objectid import ObjectId
 
-username = "boss"
-password = "ZeP-iFc-jwZ-q46"
-cluster_name = "test"
-dbname = "test"
+client = MongoClient("mongodb+srv://boss:ZeP-iFc-jwZ-q46@test.839ly.mongodb.net/test?retryWrites=true&w=majority")
 
-print("Connecting mongodb...")
-client = MongoClient("mongodb+srv://" + username + ":" + password + "@" + cluster_name + ".839ly.mongodb.net/" + dbname + "?retryWrites=true&w=majority")
-
-db = client[dbname]
-
+db = client["test"]
 cars_db = db["cars"]
 reservations_db = db["reservations"]
 rent_points_db = db["rent_points"]
 
-print("Starting flask...")
 app = Flask(__name__)
 
 def get_pages():
@@ -43,7 +35,11 @@ def get_page_by_id(page_id):
     if page_id >= 0:
         pages = get_pages()
         if page_id < len(pages):
-            return pages[page_id]
+            page = pages[page_id]
+            for car in page:
+                car["reservation"] = reservations_db.find_one({"car_id": ObjectId(car["_id"])})
+                car["rent_point"] = rent_points_db.find_one({"_id": car["rent_point_id"]})
+            return page
         else:
             return None
 
@@ -54,13 +50,13 @@ def home():
 @app.route("/car/<id>")
 def car_by_id(id):
     car = cars_db.find_one({"_id": ObjectId(id)})
-    if not car: return "404"
-
+    if not car: return "404 - car not found"
     reservation = reservations_db.find_one({"car_id": ObjectId(id)})
-
     if reservation:
         return redirect("/reserved/" + str(reservation["_id"]))
-
+    rent_point = rent_points_db.find_one({"_id": car["rent_point_id"]})
+    if not rent_point: return "404 - rent point not found"
+    car["rent_point"] = rent_point
     return render_template("car_info.html", car=car)
 
 @app.route("/cars/<page_id>")
@@ -72,9 +68,6 @@ def cars_list(page_id):
             page = []
         else:
             return redirect("/cars")
-    
-    for car in page:
-        car["reservation"] = reservations_db.find_one({"car_id": ObjectId(car["_id"])})
 
     return render_template("cars_list.html", cars=page, pages=get_pages(), page_id = int(page_id))
 
@@ -86,6 +79,12 @@ def cars_list_zero():
 def car_reserve(id):
     car = cars_db.find_one({"_id": ObjectId(id)})
     if not car: return "404 - car not found"
+    reservation = reservations_db.find_one({"car_id": ObjectId(id)})
+    if reservation:
+        return "already is reserved"
+    rent_point = rent_points_db.find_one({"_id": car["rent_point_id"]})
+    if not rent_point: return "404 - rent point not found"
+    car["rent_point"] = rent_point
     return render_template("car_reserve.html", car=car)
 
 @app.route("/reserved/<reservation_id>")
@@ -103,28 +102,28 @@ def view_reserved_car(reservation_id):
 @app.route("/reserved/<reservation_id>/edit")
 def reserved_car_edit(reservation_id):
     reservation = reservations_db.find_one({"_id": ObjectId(reservation_id)})
-    
     if not reservation: return "404 - reservation not found"
-
     car = cars_db.find_one({"_id": ObjectId(reservation["car_id"])})
-
     if not car: return "404 - car not found"
-
+    rent_point = rent_points_db.find_one({"_id": car["rent_point_id"]})
+    if not rent_point: return "404 - rent point not found"
+    car["rent_point"] = rent_point
     return render_template("reserved_car_edit.html", car=car, reservation = reservation)
 
 @app.route("/reserved")
 def reserved_cars_list():
-    reserved_cars = []
+    cars = []
 
     for reservation in reservations_db.find():
         car = cars_db.find_one({"_id": ObjectId(reservation["car_id"])})
         if car:
-            reservation_ent = [
-                car, reservation["days"], reservation["price"], reservation["_id"]
-            ]
-            reserved_cars.append(reservation_ent)
+            car["reservation"] = reservation
+            cars.append(car)
+            rent_point = rent_points_db.find_one({"_id": car["rent_point_id"]})
+            if not rent_point: return "404 - rent point not found"
+            car["rent_point"] = rent_point
 
-    return render_template("reserved_cars_list.html", reserved_cars=reserved_cars)
+    return render_template("reserved_cars_list.html", cars=cars)
 
 @app.route("/admin/cars/<page_id>")
 def admin_cars_list(page_id):
@@ -146,23 +145,32 @@ def admin_cars_list_zero():
 def admin_car_info(car_id):
     car = cars_db.find_one({"_id": ObjectId(car_id)})
     if not car: return "404 - car not found"
+    rent_point = rent_points_db.find_one({"_id": car["rent_point_id"]})
+    if not rent_point: return "404 - rent point not found"
+    car["rent_point"] = rent_point
     return render_template("admin/car_info.html", car=car)
 
 @app.route("/admin/car/<car_id>/edit")
 def admin_car_edit(car_id):
     car = cars_db.find_one({"_id": ObjectId(car_id)})
     if not car: return "404 - car not found"
-    return render_template("admin/car_edit.html", car=car)
+    rent_point = rent_points_db.find_one({"_id": car["rent_point_id"]})
+    if not rent_point: return "404 - rent point not found"
+    car["rent_point"] = rent_point
+    return render_template("admin/car_edit.html", car=car, rent_points=rent_points_db.find())
 
 @app.route("/admin/add_car")
 def admin_add_car():
-    return render_template("admin/car_add.html")
+    return render_template("admin/car_add.html", rent_points=rent_points_db.find())
 
 @app.route("/admin/car/<car_id>/reservations")
-def admin_reservation_view(car_id):
+def admin_reservations_view(car_id):
     car = cars_db.find_one({"_id": ObjectId(car_id)})
     if not car: return "404 - car not found"
     data = list(reservations_db.find({"car_id": ObjectId(car_id)}))
+    rent_point = rent_points_db.find_one({"_id": car["rent_point_id"]})
+    if not rent_point: return "404 - rent point not found"
+    car["rent_point"] = rent_point
     return render_template("admin/car_reservations.html", car=car, data=data)
 
 # REDIRECTS
@@ -201,17 +209,14 @@ def reserve_car_post():
 
     try:
         jsonData = request.json
-        car_id = jsonData["car_id"]
         days = jsonData["days"]
-
-        print(car_id)
-        print(days)
         
         if type(days) != int or days <= 0 or days > 30: return { "code": 400, "msg": "Uncorrect days count " + str(days) }
 
-        finded_car = cars_db.find_one({"_id": ObjectId(car_id)})
+        car_id = jsonData["car_id"]
+        car = cars_db.find_one({"_id": ObjectId(car_id)})
 
-        if not finded_car: return { "code": 400, "msg": "Uncorrect car id \"" + car_id + "\"" }
+        if not car: return { "code": 400, "msg": "Uncorrect car id \"" + car_id + "\"" }
 
         reservation = reservations_db.find_one({"car_id": ObjectId(car_id)})
 
@@ -220,10 +225,11 @@ def reserve_car_post():
         reservations_db.insert_one({
             "car_id": ObjectId(car_id),
             "days": days,
-            "price": days * finded_car["price"]
+            "price": days * car["price"],
+            "date": jsonData["rent_date"]
         })
 
-        return { "code": 200, "msg": ":)" }
+        return { "code": 200, "msg": "Successfully reserved!" }
     except Exception as e:
         print(e)
         return { "code": 500, "msg": str(e) }
@@ -237,7 +243,7 @@ def delete_reservation_post():
 
         reservations_db.remove({"_id": ObjectId(jsonData["reservation_id"])})
 
-        return { "code": 200, "msg": "Successfully deleted" }
+        return { "code": 200, "msg": "Successfully deleted!" }
     except Exception as e:
         print(e)
         return { "code": 500, "msg": str(e) }
@@ -265,7 +271,7 @@ def edit_reservation_post():
             }
         })
 
-        return { "code": 200, "msg": ":)" }
+        return { "code": 200, "msg": "Successfully edited!" }
     except Exception as e:
         print("Exception error:")
         print(e)
@@ -289,10 +295,12 @@ def admin_edit_car_post():
                 "mileage": jsonData["car_mileage"],
                 "seats": jsonData["car_seats"],
                 "price": jsonData["car_price"],
+                "image": jsonData["car_image"],
+                "rent_point": jsonData["car_rent_point"]
             }
         })
 
-        return { "code": 200, "msg": ":)" }
+        return { "code": 200, "msg": "Successfully edited!" }
     except Exception as e:
         print("Exception error:")
         print(e)
@@ -308,11 +316,11 @@ def admin_remove_car_post():
 
         car = cars_db.find_one({"_id": ObjectId(car_id)})
 
-        if not car: return { "code": 400, "msg": "Kek 1" }
+        if not car: return { "code": 400, "msg": "Car not found" }
 
         cars_db.remove({"_id": ObjectId(car_id)})
 
-        return { "code": 200, "msg": ":)" }
+        return { "code": 200, "msg": "Successfully removed!" }
     except Exception as e:
         print("Exception error:")
         print(e)
@@ -324,16 +332,21 @@ def add_car_post():
 
     try:
         jsonData = request.json
+        rent_point_id = ObjectId(jsonData["car_rent_point"])
+        rent_point = rent_points_db.find_one({"_id": rent_point_id})
+        
+        if not rent_point: return { "code": 400, "msg": "Rent Point not found" }
 
         cars_db.insert_one({
             "name": jsonData["car_name"],
             "mileage": jsonData["car_mileage"],
             "seats": jsonData["car_seats"],
             "price": jsonData["car_price"],
-            "image": jsonData["car_image"]
+            "image": jsonData["car_image"],
+            "rent_point_id": rent_point_id
         })
 
-        return { "code": 200, "msg": ":)" }
+        return { "code": 200, "msg": "Successfully added!" }
     except Exception as e:
         print(e)
         return { "code": 500, "msg": str(e) }

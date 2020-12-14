@@ -9,13 +9,14 @@
 {% endblock %}
 
 {% block content %}
-<img src="{{ url_for('static', filename='images/' + car.image) }}" alt="" class="auto-image auto-image-center">
+<img src="{{ car.image }}" alt="" class="auto-image auto-image-center">
 <div class="center-info">
     <a class="car-link">{{ car.name }} ir rezervēta {{ reservation.days }} dienas par {{ reservation.price }}€</a>
     <p>{{ car.name }}</p>
     <p>Nobraukums: {{ car.mileage }} km</p>
     <p>Sēdvietas: {{ car.seats }}</p>
     <p>Cena: {{ car.price }}€ / diena</p>
+    <p>Rent Point: {{ car.rent_point.name }} - {{ car.rent_point.location }}</p>
 </div>
 <a href="/reserved/{{ reservation._id | string }}/edit" class="btn btn-blue btn-center btn-m">Rediģēt</a>
 <button onclick='removeCar("{{ car._id }}")' class="btn btn-red btn-center btn-m">Noņemt</button>

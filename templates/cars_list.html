@@ -5,13 +5,14 @@
     {% for car in cars %}
     <li>
         <div class="left">
-            <img src="{{ url_for('static', filename='images/' + car.image) }}" alt="" class="auto-image">
+            <img src="{{ car.image }}" alt="" class="auto-image">
         </div>
         <div class="center">
             <a class="car-link" href="/car/{{ car._id }}">{{ car.name }}</a>
             <p>Nobraukums: {{ car.mileage }} km</p>
             <p>Sēdvietas: {{ car.seats }}</p>
             <p>Cena: {{ car.price }}€ / diena</p>
+            <p>Rent Point: {{ car.rent_point.name }} - {{ car.rent_point.location }}</p>
         </div>
         <div class="right">
             {% if car.reservation %}

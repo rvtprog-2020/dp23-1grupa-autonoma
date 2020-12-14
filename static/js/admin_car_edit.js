@@ -26,6 +26,8 @@ async function editCar(carId) {
     carMileage = document.getElementById("carMileage");
     carSeats = document.getElementById("carSeats");
     carPrice = document.getElementById("carPrice");
+    carImage = document.getElementById("carImage");
+    carRentPoint = document.getElementById("rentPoint");
 
     if (carId == null) {
         return;
@@ -42,7 +44,9 @@ async function editCar(carId) {
             "car_name": carName.value,
             "car_mileage": parseInt(carMileage.value),
             "car_seats": parseInt(carSeats.value),
-            "car_price": parseInt(carPrice.value)
+            "car_price": parseInt(carPrice.value),
+            "car_image": carImage.value,
+            "car_rent_point": carRentPoint.value
         })
     });
     let data = await response.json();
@@ -61,6 +65,7 @@ async function addCar() {
     carSeats = document.getElementById("carSeats");
     carPrice = document.getElementById("carPrice");
     carImage = document.getElementById("carImage");
+    carRentPoint = document.getElementById("rentPoint");
 
     let response = await fetch("http://localhost/admin/add_car", {
         method: "POST",
@@ -73,7 +78,8 @@ async function addCar() {
             "car_mileage": parseInt(carMileage.value),
             "car_seats": parseInt(carSeats.value),
             "car_price": parseInt(carPrice.value),
-            "car_image": carImage.value
+            "car_image": carImage.value,
+            "car_rent_point": carRentPoint.value
         })
     });
     let data = await response.json();

@@ -18,12 +18,13 @@
     setReservationId("{{ reservation._id | string }}");
 </script>
 
-<img src="{{ url_for('static', filename='images/' + car.image) }}" alt="" class="auto-image auto-image-center">
+<img src="{{ car.image }}" alt="" class="auto-image auto-image-center">
 <div class="center-info">
     <p>{{ car.name }}</p>
     <p>Nobraukums: {{ car.mileage }} km</p>
     <p>Sēdvietas: {{ car.seats }}</p>
     <p>Cena: {{ car.price }}€ / diena</p>
+    <p>Rent Point: {{ car.rent_point.name }} - {{ car.rent_point.location }}</p>
 </div>
 
 <div id="reserve-info" class="center-info hidden">

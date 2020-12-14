@@ -1,12 +1,13 @@
 {% extends "layout.html" %}
 
 {% block content %}
-<img src="{{ url_for('static', filename='images/' + car.image) }}" alt="" class="auto-image auto-image-center">
+<img src="{{ car.image }}" alt="" class="auto-image auto-image-center">
 <div class="center-info">
     <p>{{ car.name }}</p>
     <p>Nobraukums: {{ car.mileage }} km</p>
     <p>Sēdvietas: {{ car.seats }}</p>
     <p>Cena: {{ car.price }}€ / diena</p>
+    <p>Rent Point: {{ car.rent_point.name }} - {{ car.rent_point.location }}</p>
 </div>
 <a href="/car/{{ car._id }}/reserve" class="btn btn-blue btn-center btn-m">Rezervēt</button>
 <a href="/cars" class="btn btn-red btn-center btn-m">Atpakaļ</a>

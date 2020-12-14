@@ -12,7 +12,6 @@ function setReservationId(id) {
 
 window.addEventListener("load", function() {
     let daysSlider = document.getElementById("slider-days");
-
     changeSlider(daysSlider.value);
 });
 
@@ -30,6 +29,8 @@ function changeSlider(value) {
 }
 
 async function reserveCar(car_id) {
+    let rentStartDate = document.getElementById("rentDate");
+
     let response = await fetch("http://localhost/reserve_car", {
         method: "POST",
         headers: {
@@ -38,7 +39,8 @@ async function reserveCar(car_id) {
         },
         body: JSON.stringify({
             "car_id": car_id,
-            "days": parseInt(days)
+            "days": parseInt(days),
+            "rent_date": rentDate.value
         })
     });
     let data = await response.json();

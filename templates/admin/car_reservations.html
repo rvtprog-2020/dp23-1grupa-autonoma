@@ -1,14 +1,16 @@
 {% extends "layout.html" %}
 
 {% block content %}
-<img src="{{ url_for('static', filename='images/' + car.image) }}" alt="" class="auto-image auto-image-center">
+<img src="{{ car.image }}" alt="" class="auto-image auto-image-center">
 <div class="center-info">
     <p>{{ car.name }}</p>
     <p>Nobraukums: {{ car.mileage }} km</p>
     <p>Sēdvietas: {{ car.seats }}</p>
     <p>Cena: {{ car.price }}€ / diena</p>
+    <p>Rent Point: {{ car.rent_point.name }} - {{ car.rent_point.location }}</p>
 </div>
 
+{% if data | length > 0 %}
 <ul>
     <li>
     {% for reserv in data %}
@@ -16,6 +18,9 @@
     {% endfor %}
     </li>
 </ul>
+{% else %}
+<p>No anybody reserve this car</p>
+{% endif %}
 
 <a href="/admin/cars" class="btn btn-red btn-center btn-m">Atpakaļ</a>
 {% endblock %}
