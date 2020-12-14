@@ -76,7 +76,11 @@ def car_by_id(id):
 def cars_list(page_id):
     page = get_page_by_id(page_id)
     
-    if not page: return redirect("/cars")
+    if not page:
+        if page_id == 0:
+            page = []
+        else:
+            return redirect("/cars")
 
     return render_template("cars_list.html", cars=page, pages=get_pages(), page_id = int(page_id))
 
@@ -118,21 +122,52 @@ def reserved_cars_list():
 
     return render_template("reserved_cars_list.html", reserved_cars=reserved_cars)
 
-@app.route("/admin/cars")
-def admin_cars_list():
-    cars_in_page = cars[:3] # TODO
-    print(cars_in_page)
-    return render_template("admin/cars_list.html", cars=cars_in_page)
+@app.route("/admin/cars/<page_id>")
+def admin_cars_list(page_id):
+    page = get_page_by_id(page_id)
+    
+    if not page:
+        if page_id == 0:
+            page = []
+        else:
+            return redirect("/cars")
 
-@app.route("/admin/car/<id>")
-def admin_car_info(id):
-    car = find_car_by_id(id)
+    return render_template("admin/cars_list.html", cars=page, pages=get_pages(), page_id = int(page_id))
+
+@app.route("/admin/cars")
+def admin_cars_list_zero():
+    return admin_cars_list(0)
+
+@app.route("/admin/car/<car_id>")
+def admin_car_info(car_id):
+    car = find_car_by_id(car_id)
     if not car: return "404"
     return render_template("admin/car_info.html", car=car)
+
+@app.route("/admin/car/<car_id>/edit")
+def admin_car_edit(car_id):
+    car = find_car_by_id(car_id)
+    if not car: return "404"
+    return render_template("admin/car_edit.html", car=car)
+
+@app.route("/admin/add_car")
+def admin_add_car():
+    return render_template("admin/car_add.html")
+
+@app.route("/admin/car/<car_id>/reservations")
+def admin_reservation_view(car_id):
+    car = find_car_by_id(car_id)
+    if not car: return "404"
+
+    data = list(reservations_db.find({"car_id": ObjectId(car_id)}))
+
+    return render_template("admin/car_reservations.html", car=car, data=data)
 
 @app.route("/debug")
 def debug():
     return render_template("debug.html")
+
+# POSTS
 
 @app.route("/get_cars_page", methods=["POST"])
 def get_cars_page():
@@ -216,16 +251,83 @@ def edit_reservation_post():
 
         if not car: return { "code": 400, "msg": "Kek 2" }
 
-        remove_reservation(car["_id"])
-
-        reservation["days"] = jsonData["days"]
-        reservation["price"] = jsonData["days"] * car["price"]
-
-        reservations_db.insert_one(reservation)
+        reservations_db.update_one({"_id": ObjectId(reservation_id)}, {
+            "$set": {
+                "days": jsonData["days"],
+                "price": jsonData["days"] * car["price"]
+            }
+        })
 
         return { "code": 200, "msg": ":)" }
     except Exception as e:
         print("Exception error:")
+        print(e)
+        return { "code": 500, "msg": str(e) }
+
+@app.route("/admin/edit_car", methods=["POST"])
+def admin_edit_car_post():
+    if not request.content_type == "application/json": return { "code": 400, "msg": "Unknown request type" }
+
+    try:
+        jsonData = request.json
+        car_id = jsonData["car_id"]
+
+        car = find_car_by_id(car_id)
+
+        if not car: return { "code": 400, "msg": "Kek 1" }
+
+        cars_db.update_one({"_id": ObjectId(car_id)}, {
+            "$set": {
+                "name": jsonData["car_name"],
+                "mileage": jsonData["car_mileage"],
+                "seats": jsonData["car_seats"],
+                "price": jsonData["car_price"],
+            }
+        })
+
+        return { "code": 200, "msg": ":)" }
+    except Exception as e:
+        print("Exception error:")
+        print(e)
+        return { "code": 500, "msg": str(e) }
+
+@app.route("/admin/remove_car", methods=["POST"])
+def admin_remove_car_post():
+    if not request.content_type == "application/json": return { "code": 400, "msg": "Unknown request type" }
+
+    try:
+        jsonData = request.json
+        car_id = jsonData["car_id"]
+
+        car = find_car_by_id(car_id)
+
+        if not car: return { "code": 400, "msg": "Kek 1" }
+
+        cars_db.remove({"_id": ObjectId(car_id)})
+
+        return { "code": 200, "msg": ":)" }
+    except Exception as e:
+        print("Exception error:")
+        print(e)
+        return { "code": 500, "msg": str(e) }
+
+@app.route("/admin/add_car", methods=["POST"])
+def add_car_post():
+    if not request.content_type == "application/json": return { "code": 400, "msg": "Unknown request type" }
+
+    try:
+        jsonData = request.json
+
+        cars_db.insert_one({
+            "name": jsonData["car_name"],
+            "mileage": jsonData["car_mileage"],
+            "seats": jsonData["car_seats"],
+            "price": jsonData["car_price"],
+            "image": jsonData["car_image"]
+        })
+
+        return { "code": 200, "msg": ":)" }
+    except Exception as e:
         print(e)
         return { "code": 500, "msg": str(e) }
 

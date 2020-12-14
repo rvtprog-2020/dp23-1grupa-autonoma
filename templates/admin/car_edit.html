@@ -1,0 +1,35 @@
+{% extends "layout.html" %}
+
+{% block head %}
+{{ super() }}
+<script src="{{ url_for('static', filename='js/admin_car_edit.js') }}"></script>
+{% endblock %}
+
+{% block content %}
+<script>
+    setCarId("{{ car._id }}");
+</script>
+
+<img src="{{ url_for('static', filename='images/' + car.image) }}" alt="" class="auto-image auto-image-center">
+<div class="center-info">
+    <p>{{ car.name }}</p>
+    <p>Nobraukums: {{ car.mileage }} km</p>
+    <p>Sēdvietas: {{ car.seats }}</p>
+    <p>Cena: {{ car.price }}€ / diena</p>
+</div>
+
+Car Name:
+<input type="text" name="carName" id="carName" value="{{ car.name }}">
+<br>
+Car Mileage (km):
+<input type="number" name="carMileage" id="carMileage" value="{{ car.mileage }}">
+<br>
+Car Seats:
+<input type="number" name="carSeats" id="carSeats" value="{{ car.seats }}">
+<br>
+Car Price (€ / diena):
+<input type="number" name="carPrice" id="carPrice" value="{{ car.price }}">
+
+<button class="btn btn-blue btn-center btn-m" onclick='editCar("{{ car._id }}")''>Edit</button>
+
+{% endblock %}

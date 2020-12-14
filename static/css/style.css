@@ -186,6 +186,11 @@ body {
     display: none;
 }
 
+.field-block {
+    display: block;
+    width: 100%;
+}
+
 /* BUTTONS */
 
 .btn {

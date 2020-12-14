@@ -1,9 +1,10 @@
 from pymongo import MongoClient
 from bson.json_util import dumps
+from bson.objectid import ObjectId
 
 # TO INSTALL (WINDOWS):
 # USE: pip install pymongo[srv]
-# IF ALREADY EXISTS BEFORE INSTALLING: pip uninstall pymongo AND pip install dnspython
+# IF ALREADY EXISTS BEFORE INSTALLING: pip uninstall pymongo AND pip uninstall dnspython
 
 def run():
     username = "boss"
@@ -18,7 +19,11 @@ def run():
 
     cars_db = db["cars"]
 
-    cars_db.insert_one({"name": "Nissan X-Trail", "image": "nissan", "milleage": 100000, "seats": 4, "price": 4})
+    filter = {"_id": ObjectId("5fd3375fbded2ade3b7feb68")}
+
+    print(cars_db.find_one(filter))
+
+    cars_db.update_one(filter, {"$set": {"image": "nissan.jpg"}})
 
 if __name__ == "__main__":
     run()

@@ -1,16 +1,8 @@
 {% extends "layout.html" %}
 
-{% block head %}
-
-{{ super() }}
-
-<!--<script src="{{ url_for('static', filename='js/load_cars.js') }}"></script>-->
-
-{% endblock %}
-
 {% block content %}
 <ul class="auto-list" id="auto-list">
-    {% for car in cars%}
+    {% for car in cars %}
     <li>
         <div class="left">
             <img src="{{ url_for('static', filename='images/' + car.image) }}" alt="" class="auto-image">

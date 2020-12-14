@@ -1,6 +1,12 @@
 {% extends "layout.html" %}
 
+{% block head %}
+{{ super() }}
+<script src="{{ url_for('static', filename='js/admin_car_edit.js') }}"></script>
+{% endblock %}
+
 {% block content %}
+<a href="/admin/add_car" class="btn btn-center btn-m btn-blue">Add Car</a>
 <ul class="auto-list">
     {% for car in cars %}
     <li>
@@ -8,16 +14,24 @@
             <img src="{{ url_for('static', filename='images/' + car.image) }}" alt="" class="auto-image">
         </div>
         <div class="center">
-            <p>{{ car.name }}</p>
+            <a class="car-link" href="/admin/car/{{ car._id }}">{{ car.name }}</a>
             <p>Nobraukums: {{ car.mileage }} km</p>
             <p>Sēdvietas: {{ car.seats }}</p>
             <p>Cena: {{ car.price }}€ / diena</p>
         </div>
         <div class="right">
-            <button class="btn btn-center btn-m btn-red">Noņemt</button>
-            <button class="btn btn-center btn-m btn-blue">Rediģēt</button>
+            <button onclick='removeCar("{{ car._id }}")' class="btn btn-center btn-m btn-red">Noņemt</button>
+            <a href="/admin/car/{{ car._id }}/edit" class="btn btn-center btn-m btn-blue">Rediģēt</a>
         </div>
     </li>
     {% endfor %}
+    <li>
+        <div class="pages">
+            {% for page in pages %}
+            {% set index = pages.index(page) %}
+            <a href="/admin/cars/{{ index }}" class="btn {% if index == page_id %}btn-blue{% endif %}">{{ index + 1 }}</a>
+            {% endfor %}
+        </div>
+    </li>
 </ul>
 {% endblock %}
