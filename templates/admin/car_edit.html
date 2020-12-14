@@ -30,6 +30,7 @@ Car Seats:
 Car Price (€ / diena):
 <input type="number" name="carPrice" id="carPrice" value="{{ car.price }}">
 
-<button class="btn btn-blue btn-center btn-m" onclick='editCar("{{ car._id }}")''>Edit</button>
+<button class="btn btn-blue btn-center btn-m" onclick='editCar("{{ car._id }}")'>Edit</button>
+<a href="/admin/cars" class="btn btn-red btn-center btn-m">Atpakaļ</a>
 
 {% endblock %}

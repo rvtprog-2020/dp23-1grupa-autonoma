@@ -22,6 +22,7 @@
         <div class="right">
             <button onclick='removeCar("{{ car._id }}")' class="btn btn-center btn-m btn-red">Noņemt</button>
             <a href="/admin/car/{{ car._id }}/edit" class="btn btn-center btn-m btn-blue">Rediģēt</a>
+            <a href="/admin/car/{{ car._id }}/reservations" class="btn btn-green btn-center btn-m">Skatīties Rezervētāju</a>
         </div>
     </li>
     {% endfor %}
