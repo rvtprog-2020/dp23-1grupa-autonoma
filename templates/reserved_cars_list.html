@@ -22,7 +22,7 @@
             <p>Cena: {{ car.price }}€ / diena</p>
         </div>
         <div class="right">
-            <button onclick='removeCar("{{ car._id }}")' class="btn btn-red btn-m">Noņemt</button>
+            <button onclick='deleteReservation("{{ reservation._id}}")' class="btn btn-red btn-m">Noņemt</button>
             <a href="/reserved/{{ reservation_id | string }}/edit" class="btn btn-blue btn-m">Rediģēt</a>
         </div>
     </li>

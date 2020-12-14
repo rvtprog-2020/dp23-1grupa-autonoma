@@ -1,4 +1,4 @@
-async function removeCar(car_id) {
+async function deleteReservation(reservation_id) {
     let response = await fetch("http://localhost/remove_car", {
         method: "POST",
         headers: {
@@ -6,7 +6,7 @@ async function removeCar(car_id) {
             "Content-type": "application/json"
         },
         body: JSON.stringify({
-            "car_id": car_id
+            "reservation_id": reservation_id
         })
     });
     let data = await response.json();
