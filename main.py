@@ -167,6 +167,16 @@ def admin_reservation_view(car_id):
 def debug():
     return render_template("debug.html")
 
+# REDIRECTS
+
+@app.route("/admin")
+def redirect1():
+    return redirect("/")
+
+@app.route("/car")
+def redirect2():
+    return redirect("/")
+
 # POSTS
 
 @app.route("/get_cars_page", methods=["POST"])
