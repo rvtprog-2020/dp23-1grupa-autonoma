@@ -14,7 +14,11 @@
             <p>Cena: {{ car.price }}€ / diena</p>
         </div>
         <div class="right">
+            {% if car.reservation %}
+            <a href="/reserved/{{ car.reservation._id }}" class="btn btn-green">Skatīt</a>
+            {% else %}
             <a href="/car/{{ car._id }}/reserve" class="btn btn-blue">Rezervēt</a>
+            {% endif %}
         </div>
     </li>
     {% endfor %}

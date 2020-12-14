@@ -70,6 +70,12 @@ def home():
 def car_by_id(id):
     car = find_car_by_id(id)
     if not car: return "404"
+
+    reservation = reservations_db.find_one({"car_id": ObjectId(id)})
+
+    if reservation:
+        return redirect("/reserved/" + str(reservation["_id"]))
+
     return render_template("car_info.html", car=car)
 
 @app.route("/cars/<page_id>")
@@ -81,6 +87,9 @@ def cars_list(page_id):
             page = []
         else:
             return redirect("/cars")
+    
+    for car in page:
+        car["reservation"] = reservations_db.find_one({"car_id": ObjectId(car["_id"])})
 
     return render_template("cars_list.html", cars=page, pages=get_pages(), page_id = int(page_id))
 
