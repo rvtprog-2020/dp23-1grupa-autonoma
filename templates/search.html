@@ -1,5 +1,23 @@
 {% extends "layout.html" %}
 
+{{ filters }}
+
 {% block content %}
+
+{% for filter in filters %}
+
+<hr>
+
+<label for="">{{ filter.name }}</label>
+
+{% for element in filter.elements %}
+
+<br>
+<input type="checkbox" name="{{filter.name}}-{{ element }}" id="{{filter.name}}-{{ element }}">
+<label for="{{ element }}">{{ element }}</label>
+
+{% endfor %}
+
+{% endfor %}
 
 {% endblock %}

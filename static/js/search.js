@@ -1,0 +1,3 @@
+function acceptFilters(filterId, filterValue) {
+
+}

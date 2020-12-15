@@ -22,16 +22,17 @@ async function removeCar(carId) {
 }
 
 async function editCar(carId) {
+    if (carId == null) {
+        return;
+    }
+
     carName = document.getElementById("carName");
+    carBrand = document.getElementById("carBrand");
     carMileage = document.getElementById("carMileage");
     carSeats = document.getElementById("carSeats");
     carPrice = document.getElementById("carPrice");
     carImage = document.getElementById("carImage");
     carRentPoint = document.getElementById("rentPoint");
-
-    if (carId == null) {
-        return;
-    }
 
     let response = await fetch("http://localhost/admin/edit_car", {
         method: "POST",
@@ -42,6 +43,7 @@ async function editCar(carId) {
         body: JSON.stringify({
             "car_id": carId,
             "car_name": carName.value,
+            "car_brand": carBrand.value,
             "car_mileage": parseInt(carMileage.value),
             "car_seats": parseInt(carSeats.value),
             "car_price": parseInt(carPrice.value),
@@ -61,6 +63,7 @@ async function editCar(carId) {
 
 async function addCar() {
     carName = document.getElementById("carName");
+    carBrand = document.getElementById("carBrand");
     carMileage = document.getElementById("carMileage");
     carSeats = document.getElementById("carSeats");
     carPrice = document.getElementById("carPrice");
@@ -75,6 +78,7 @@ async function addCar() {
         },
         body: JSON.stringify({
             "car_name": carName.value,
+            "car_brand": carBrand.value,
             "car_mileage": parseInt(carMileage.value),
             "car_seats": parseInt(carSeats.value),
             "car_price": parseInt(carPrice.value),

@@ -43,9 +43,39 @@ def get_page_by_id(page_id):
         else:
             return None
 
-@app.route('/')
+@app.route("/")
 def home():
-    return render_template('home.html')
+    return render_template("home.html")
+
+@app.route("/search")
+def search():
+
+    brands_list = set()
+    
+    for car in cars_db.find():
+        brands_list.add(car["brand"])
+
+    mileage_list = set()
+    
+    for car in cars_db.find():
+        mileage_list.add(car["mileage"])
+        
+    filters = [
+        {
+            "id": "brand",
+            "name": "Car Brand",
+            "elements": brands_list
+        },
+        {
+            "id": "mileage",
+            "name": "Car Mileage",
+            "elements": mileage_list
+        }
+    ]
+
+    print(filters)
+
+    return render_template("search.html", filters=filters)
 
 @app.route("/car/<id>")
 def car_by_id(id):
@@ -368,6 +398,7 @@ def add_car_post():
 
         cars_db.insert_one({
             "name": jsonData["car_name"],
+            "brand": jsonData["car_brand"],
             "mileage": jsonData["car_mileage"],
             "seats": jsonData["car_seats"],
             "price": jsonData["car_price"],

@@ -18,12 +18,18 @@ def run():
 
     db = client["test"]
 
-    rent_points_db = db["rent_points"]
+    cars_db = db["cars"]
 
-    rent_points_db.update_many({}, {
+    for car in cars_db.find():
+        print(car["name"])
+        brand_name = input()
+        print(brand_name)
+
+        cars_db.update({"_id": car["_id"]}, {
             "$set": {
-                "image": "https://i.redd.it/w5eatab9oop01.jpg"
+                "brand": brand_name
             }
+
         })
 
 if __name__ == "__main__":
