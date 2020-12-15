@@ -419,7 +419,26 @@ def edit_rent_point_post():
             }
         })
 
-        return { "code": 200, "msg": "Successfully added!" }
+        return { "code": 200, "msg": "Successfully edited!" }
+    except Exception as e:
+        print("Exception error:")
+        print(e)
+        return { "code": 500, "msg": str(e) }
+
+@app.route("/admin/rent_point_delete", methods=["POST"])
+def rent_point_delete_post():
+    if not request.content_type == "application/json": return { "code": 400, "msg": "Unknown request type" }
+
+    try:
+        jsonData = request.json
+
+        rent_point_id = ObjectId(jsonData["rent_point_id"])
+        rent_point = rent_points_db.find({"_id": rent_point_id})
+        if not rent_point: return { "code": 400, "msg": "rent point not found" }
+
+        rent_points_db.remove({"_id": rent_point_id})
+
+        return { "code": 200, "msg": "Successfully deleted!" }
     except Exception as e:
         print("Exception error:")
         print(e)

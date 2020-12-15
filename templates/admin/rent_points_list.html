@@ -1,5 +1,10 @@
 {% extends "layout.html" %}
 
+{% block head %}
+{{ super() }}
+<script src="{{ url_for('static', filename='js/admin_rent_point.js') }}"></script>
+{% endblock %}
+
 {% block content %}
 
 <a href="/admin/create_rent_point" class="btn btn-center btn-m btn-blue">Create New Rent Point</a>
@@ -14,6 +19,7 @@
         <a href="/admin/rent_points/{{ rent_point._id }}/edit" class="car-link">
             Edit
         </a>
+        <button onclick='deleteRentPoint("{{ rent_point._id }}")' class="car-link">Noņemt</button>
     </li>
     {% endfor %}
 </ul>

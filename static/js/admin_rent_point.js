@@ -25,6 +25,27 @@ async function createRentPoint() {
     }
 }
 
+async function deleteRentPoint(rentPointId) {
+    let response = await fetch("http://localhost/admin/rent_point_delete", {
+        method: "POST",
+        headers: {
+            "Accept": "application/json",
+            "Content-type": "application/json"
+        },
+        body: JSON.stringify({
+            "rent_point_id": rentPointId
+        })
+    });
+    let data = await response.json();
+    console.log(data);
+
+    if (data.code == 200) {
+        window.location.href = "/admin/rent_points";
+    } else {
+        alert(data.msg);
+    }
+}
+
 async function editRentPoint(rentPointId) {
     rentPointName = document.getElementById("rentPointName");
     rentPointLocation = document.getElementById("rentPointLocation");
