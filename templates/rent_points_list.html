@@ -1,5 +1,7 @@
 {% extends "layout.html" %}
 
+{% block title %}Noma punktu saraksts{% endblock %}
+
 {% block content %}
 
 {% if rent_points | length > 0 %}
@@ -13,7 +15,7 @@
     {% endfor %}
 </ul>
 {% else %}
-<p>No Rent Points :(</p>
+<p>Neviens noma punktu nav :(</p>
 {% endif %}
 
 {% endblock %}

@@ -1,5 +1,7 @@
 {% extends "layout.html" %}
 
+{% block title %}Noma punktu informācija{% endblock %}
+
 {% block content %}
 
 <div class="center-info">
@@ -9,7 +11,7 @@
     <img src="{{ rent_point.image }}" class="auto-image auto-image-center" alt="">
 
     {% if cars | length > 0 %}
-    <p>At this rent point is cars:</p>
+    <p>Auto sajā nomas punktā</p>
     <ul>
         {% for car in cars %}
         <li>
@@ -18,10 +20,10 @@
         {% endfor %}
     </ul>
     {% else %}
-    <p>No cars at this rent point :(</p>
+    <p>Šajā nomas punktā nav nevienu auto :(</p>
     {% endif %}
 </div>
 
-<a href="/rent_points" class="btn btn-red btn-center btn-m">Atpakaļ</a>
+<a href="/rent_points" class="btn btn-red btn-center btn-m">Atpakaļ uz nomas punktus sarakstu</a>
 
 {% endblock %}

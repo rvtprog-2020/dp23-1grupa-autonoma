@@ -1,5 +1,7 @@
 {% extends "layout.html" %}
 
+{% block title %}Noma punktu rediģešana{% endblock %}
+
 {% block head %}
 {{ super() }}
 <script src="{{ url_for('static', filename='js/admin_rent_point.js') }}"></script>
@@ -7,19 +9,19 @@
 
 {% block content %}
 
-<label for="rentPointName">Rent Point Name</label>
+<label for="rentPointName">Noma punkta nosaukums</label>
 <input type="text" name="rentPointName" id="rentPointName" value="{{ rent_point.name }}">
 <br>
 
-<label for="rentPointLocation">Rent Point Location</label>
+<label for="rentPointLocation">Noma punkta atrašanās vieta</label>
 <input type="text" name="rentPointLocation" id="rentPointLocation" value="{{ rent_point.location }}">
 <br>
 
-<label for="rentPointImage">Rent Point Image (URL)</label>
+<label for="rentPointImage">Noma punkta bilde (URL)</label>
 <input type="url" name="rentPointImage" id="rentPointImage" value="{{ rent_point.image }}">
 
-<button class="btn btn-blue btn-center btn-m" onclick='editRentPoint("{{ rent_point._id }}")'>Edit</button>
+<button class="btn btn-blue btn-center btn-m" onclick='editRentPoint("{{ rent_point._id }}")'>Iesniegt izmaiņas</button>
 <button onclick='deleteRentPoint("{{ rent_point._id }}")' class="btn btn-center btn-m btn-red">Noņemt</button>
-<a href="/admin/rent_points/{{ rent_point._id }}" class="btn btn-red btn-center btn-m">Atpakaļ</a>
+<a href="/admin/rent_points/{{ rent_point._id }}" class="btn btn-red btn-center btn-m">Atpakaļ uz noma punktu sarakstu</a>
 
 {% endblock %}

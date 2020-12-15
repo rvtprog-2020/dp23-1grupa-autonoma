@@ -1,5 +1,7 @@
 {% extends "layout.html" %}
 
+{% block title %}Auto rezervācija{% endblock %}
+
 {% block head %}
 
 {{ super() }}
@@ -20,7 +22,7 @@
         <p>Sēdvietas: {{ car.seats }}</p>
         <p>Cena: {{ car.price }}€ / diena</p>
         <a href="/admin/rent_points/{{ car.rent_point._id }}" class="car-link">
-            Rent Point: {{ car.rent_point.name }} - {{ car.rent_point.location }}
+            Noma punkts: {{ car.rent_point.name }} - {{ car.rent_point.location }}
         </a>
     </div>
 
@@ -34,6 +36,6 @@
     </div>
 
     <button class="btn btn-green btn-center btn-m" onclick='reserveCar("{{ car._id }}")'>Rezervēt</button>
-    <a href="/car/{{ car._id }}" class="btn btn-red btn-center btn-m">Atcelt</a>
+    <a href="/car/{{ car._id }}" class="btn btn-red btn-center btn-m">Atpakaļ uz auto informāciju</a>
 </div>
 {% endblock %}

@@ -1,5 +1,7 @@
 {% extends "layout.html" %}
 
+{% block title %}Auto rezervācijas{% endblock %}
+
 {% block content %}
 <img src="{{ car.image }}" alt="" class="auto-image auto-image-center">
 <div class="center-info">
@@ -8,7 +10,7 @@
     <p>Sēdvietas: {{ car.seats }}</p>
     <p>Cena: {{ car.price }}€ / diena</p>
     <a href="/admin/rent_points/{{ car.rent_point._id }}" class="car-link">
-        Rent Point: {{ car.rent_point.name }} - {{ car.rent_point.location }}
+        Noma punkts: {{ car.rent_point.name }} - {{ car.rent_point.location }}
     </a>
 </div>
 
@@ -21,8 +23,8 @@
     </li>
 </ul>
 {% else %}
-<p>No anybody reserve this car</p>
+<p>Neviens šo mašīnu nav rezervējis :(</p>
 {% endif %}
 
-<a href="/admin/cars" class="btn btn-red btn-center btn-m">Atpakaļ</a>
+<a href="/admin/cars" class="btn btn-red btn-center btn-m">Atpakaļ uz auto sarakstu</a>
 {% endblock %}

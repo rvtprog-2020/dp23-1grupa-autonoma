@@ -1,5 +1,7 @@
 {% extends "layout.html" %}
 
+{% block title %}Auto saraksts{% endblock %}
+
 {% block content %}
 <ul class="auto-list" id="auto-list">
     {% for car in cars %}
@@ -13,7 +15,7 @@
             <p>Sēdvietas: {{ car.seats }}</p>
             <p>Cena: {{ car.price }}€ / diena</p>
             <a href="/admin/rent_points/{{ car.rent_point._id }}" class="car-link">
-                Rent Point: {{ car.rent_point.name }} - {{ car.rent_point.location }}
+                Noma punkts: {{ car.rent_point.name }} - {{ car.rent_point.location }}
             </a>
         </div>
         <div class="right">

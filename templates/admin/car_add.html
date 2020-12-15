@@ -1,5 +1,7 @@
 {% extends "layout.html" %}
 
+{% block title %}Pievienot auto{% endblock %}
+
 {% block head %}
 {{ super() }}
 <script src="{{ url_for('static', filename='js/admin_car_edit.js') }}"></script>
@@ -7,38 +9,38 @@
 
 {% block content %}
 
-<label for="carName">Car Name</label>
+<label for="carName">Auto nosaukums</label>
 <input type="text" name="carName" id="carName">
 <br>
 
-<label for="carBrand">Car Brand</label>
+<label for="carBrand">Auto marka</label>
 <input type="text" name="carBrand" id="carBrand">
 <br>
 
-<label for="carMileage">Car Mileage (km)</label>
+<label for="carMileage">Auto nobraukums (km)</label>
 <input type="number" name="carMileage" id="carMileage", value="0">
 <br>
 
-<label for="carSeats">Car Seats</label>
+<label for="carSeats">Sēdvietas skaits</label>
 <input type="number" name="carSeats" id="carSeats", value="4">
 <br>
 
-<label for="carPrice">Car Price (€ / diena)</label>
+<label for="carPrice">Auto cena (€ / diena)</label>
 <input type="number" name="carPrice" id="carPrice", value="2">
 <br>
 
-<label for="carImage">Car Image (URL)</label>
+<label for="carImage">Auto bilde (URL)</label>
 <input type="url" name="carImage" id="carImage">
 <br>
 
-<label for="rentPoint">Rent Point</label>
+<label for="rentPoint">Noma punkts</label>
 <select name="rentPoint" id="rentPoint">
     {% for rent_point in rent_points %}
     <option value="{{ rent_point._id }}">{{ rent_point.name}} - {{ rent_point.location }}</option>
     {% endfor %}
 </select>
 
-<button class="btn btn-blue btn-center btn-m" onclick='addCar()'>Add</button>
-<a href="/admin/cars" class="btn btn-red btn-center btn-m">Atpakaļ</a>
+<button class="btn btn-blue btn-center btn-m" onclick='addCar()'>Pievienot</button>
+<a href="/admin/cars" class="btn btn-red btn-center btn-m">Atpakaļ uz auto sarakstu</a>
 
 {% endblock %}

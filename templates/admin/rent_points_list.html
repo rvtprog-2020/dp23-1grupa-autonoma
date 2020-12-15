@@ -1,5 +1,7 @@
 {% extends "layout.html" %}
 
+{% block title %}Noma punktu saraksts{% endblock %}
+
 {% block head %}
 {{ super() }}
 <script src="{{ url_for('static', filename='js/admin_rent_point.js') }}"></script>
@@ -13,12 +15,8 @@
 <ul>
     {% for rent_point in rent_points %}
     <li>
-        <a href="/admin/rent_points/{{ rent_point._id }}" class="car-link">
-            {{ rent_point.name }} - {{ rent_point.location }}
-        </a>
-        <a href="/admin/rent_points/{{ rent_point._id }}/edit" class="car-link">
-            Edit
-        </a>
+        <a href="/admin/rent_points/{{ rent_point._id }}" class="car-link">{{ rent_point.name }} - {{ rent_point.location }}</a>
+        <a href="/admin/rent_points/{{ rent_point._id }}/edit" class="car-link">Rediģet</a>
         <button onclick='deleteRentPoint("{{ rent_point._id }}")' class="car-link">Noņemt</button>
     </li>
     {% endfor %}
