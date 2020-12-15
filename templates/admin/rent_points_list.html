@@ -1,0 +1,24 @@
+{% extends "layout.html" %}
+
+{% block content %}
+
+<a href="/admin/create_rent_point" class="btn btn-center btn-m btn-blue">Create New Rent Point</a>
+
+{% if rent_points | length > 0 %}
+<ul>
+    {% for rent_point in rent_points %}
+    <li>
+        <a href="/admin/rent_points/{{ rent_point._id }}" class="car-link">
+            {{ rent_point.name }} - {{ rent_point.location }}
+        </a>
+        <a href="/admin/rent_points/{{ rent_point._id }}/edit" class="car-link">
+            Edit
+        </a>
+    </li>
+    {% endfor %}
+</ul>
+{% else %}
+<p>No Rent Points :(</p>
+{% endif %}
+
+{% endblock %}

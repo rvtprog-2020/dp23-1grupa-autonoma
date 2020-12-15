@@ -18,12 +18,13 @@ def run():
 
     db = client["test"]
 
-    cars_db = db["rent_points"]
+    rent_points_db = db["rent_points"]
 
-    cars_db.insert_one({"name": "1. Nomas Punkts", "location": "Aisteres iela 3"})
-    cars_db.insert_one({"name": "2. Nomas Punkts", "location": "Kristapa iela 10"})
-    cars_db.insert_one({"name": "3. Nomas Punkts", "location": "Hermaņa iela 5"})
-    cars_db.insert_one({"name": "4. Nomas Punkts", "location": "Artilērijas iela 14"})
+    rent_points_db.update_many({}, {
+            "$set": {
+                "image": "https://i.redd.it/w5eatab9oop01.jpg"
+            }
+        })
 
 if __name__ == "__main__":
     run()

@@ -7,7 +7,9 @@
     <p>Nobraukums: {{ car.mileage }} km</p>
     <p>Sēdvietas: {{ car.seats }}</p>
     <p>Cena: {{ car.price }}€ / diena</p>
-    <p>Rent Point: {{ car.rent_point.name }} - {{ car.rent_point.location }}</p>
+    <a href="/admin/rent_points/{{ car.rent_point._id }}" class="car-link">
+        Rent Point: {{ car.rent_point.name }} - {{ car.rent_point.location }}
+    </a>
 </div>
 
 {% if data | length > 0 %}

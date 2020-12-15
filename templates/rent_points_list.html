@@ -1,0 +1,19 @@
+{% extends "layout.html" %}
+
+{% block content %}
+
+{% if rent_points | length > 0 %}
+<ul>
+    {% for rent_point in rent_points %}
+    <li>
+        <a href="/admin/rent_points/{{ rent_point._id }}" class="car-link">
+            {{ rent_point.name }} - {{ rent_point.location }}
+        </a>
+    </li>
+    {% endfor %}
+</ul>
+{% else %}
+<p>No Rent Points :(</p>
+{% endif %}
+
+{% endblock %}

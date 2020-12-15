@@ -125,6 +125,10 @@ def reserved_cars_list():
 
     return render_template("reserved_cars_list.html", cars=cars)
 
+@app.route("/rent_points")
+def rent_points_list():
+    return render_template("rent_points_list.html", rent_points=list(rent_points_db.find()))
+
 @app.route("/admin/cars/<page_id>")
 def admin_cars_list(page_id):
     page = get_page_by_id(page_id)
@@ -173,6 +177,28 @@ def admin_reservations_view(car_id):
     car["rent_point"] = rent_point
     return render_template("admin/car_reservations.html", car=car, data=data)
 
+@app.route("/admin/rent_points")
+def admin_rent_points_list():
+    return render_template("admin/rent_points_list.html", rent_points=list(rent_points_db.find()))
+
+@app.route("/admin/rent_points/<rent_point_id>")
+def admin_rent_point_view(rent_point_id):
+    rent_point_id = ObjectId(rent_point_id)
+    rent_point = rent_points_db.find_one({"_id": rent_point_id})
+    if not rent_point: return "404 - rent point not found"
+    return render_template("admin/rent_point_view.html", rent_point=rent_point, cars=list(cars_db.find({"rent_point_id": rent_point_id})))
+
+@app.route("/admin/create_rent_point")
+def admin_rent_point_create():
+    return render_template("admin/rent_point_create.html")
+
+@app.route("/admin/rent_points/<rent_point_id>/edit")
+def admin_rent_point_edit(rent_point_id):
+    rent_point_id = ObjectId(rent_point_id)
+    rent_point = rent_points_db.find_one({"_id": rent_point_id})
+    if not rent_point: return "404 - rent point not found"
+    return render_template("admin/rent_point_edit.html", rent_point=rent_point)
+
 # REDIRECTS
 
 @app.route("/admin")
@@ -200,6 +226,7 @@ def get_cars_page():
             "page": page,
         }
     except Exception as e:
+        print("Exception error:")
         print(e)
         return { "code": 500, "msg": "Error" }
 
@@ -231,6 +258,7 @@ def reserve_car_post():
 
         return { "code": 200, "msg": "Successfully reserved!" }
     except Exception as e:
+        print("Exception error:")
         print(e)
         return { "code": 500, "msg": str(e) }
 
@@ -245,6 +273,7 @@ def delete_reservation_post():
 
         return { "code": 200, "msg": "Successfully deleted!" }
     except Exception as e:
+        print("Exception error:")
         print(e)
         return { "code": 500, "msg": str(e) }
 
@@ -348,6 +377,51 @@ def add_car_post():
 
         return { "code": 200, "msg": "Successfully added!" }
     except Exception as e:
+        print("Exception error:")
+        print(e)
+        return { "code": 500, "msg": str(e) }
+
+@app.route("/admin/create_rent_point", methods=["POST"])
+def create_rent_point_post():
+    if not request.content_type == "application/json": return { "code": 400, "msg": "Unknown request type" }
+
+    try:
+        jsonData = request.json
+
+        rent_points_db.insert_one({
+            "name": jsonData["rent_point_name"],
+            "location": jsonData["rent_point_location"],
+            "image": jsonData["rent_point_image"]
+        })
+
+        return { "code": 200, "msg": "Successfully added!" }
+    except Exception as e:
+        print("Exception error:")
+        print(e)
+        return { "code": 500, "msg": str(e) }
+
+@app.route("/admin/edit_rent_point", methods=["POST"])
+def edit_rent_point_post():
+    if not request.content_type == "application/json": return { "code": 400, "msg": "Unknown request type" }
+
+    try:
+        jsonData = request.json
+
+        rent_point_id = ObjectId(jsonData["rent_point_id"])
+        rent_point = rent_points_db.find({"_id": rent_point_id})
+        if not rent_point: return { "code": 400, "msg": "rent point not found" }
+
+        rent_points_db.update_one({"_id": rent_point_id}, {
+            "$set": {
+                "name": jsonData["rent_point_name"],
+                "location": jsonData["rent_point_location"],
+                "image": jsonData["rent_point_image"]
+            }
+        })
+
+        return { "code": 200, "msg": "Successfully added!" }
+    except Exception as e:
+        print("Exception error:")
         print(e)
         return { "code": 500, "msg": str(e) }
 
