@@ -42,7 +42,7 @@ async function deleteReservation(reservationId) {
 }
 
 async function reserveCar(car_id) {
-    let rentStartDate = document.getElementById("rentDate");
+    let rentDate = document.getElementById("rentDate");
 
     let response = await fetch("http://localhost/reserve_car", {
         method: "POST",
