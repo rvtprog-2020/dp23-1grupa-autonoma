@@ -6,20 +6,11 @@
 
 {{ super() }}
 
-<script src="{{ url_for('static', filename='js/reservation_list.js') }}"></script>
 <script src="{{ url_for('static', filename='js/reserve.js') }}"></script>
 
 {% endblock %}
 
 {% block content %}
-<script>
-    setPrice({{ car.price }});
-</script>
-
-<script>
-    setReservationId("{{ reservation._id | string }}");
-</script>
-
 <img src="{{ car.image }}" alt="" class="auto-image auto-image-center">
 <div class="center-info">
     <p>{{ car.name }}</p>
@@ -31,14 +22,16 @@
     </a>
 </div>
 
-<div id="reserve-info" class="center-info hidden">
-    <input id="slider-days" type="range" min="1" max="30" onchange="changeSlider(this.value)" oninput="changeSlider(this.value)">
+<div id="reserve-info" class="center-info">
+    <input id="slider-days" type="range" min="1" max="30" onchange="changeSlider({{ car.price }}, this.value)" oninput="changeSlider(this.value)" value="{{ reservation.days }}">
 
     <p>Dienas: <span id="reserve-days"></span></p>
     <p>Cena: <span id="reserve-price"></span></p>
+
+    <input type="date" name="rentDate" id="rentDate" value="{{ reservation.date }}">
 </div>
 
-<button onclick='editCar("{{ car._id }}")' class="btn btn-green btn-center btn-m">Iesniegt izmaiņas</button>
+<button onclick='editReservation("{{ reservation._id }}")' class="btn btn-green btn-center btn-m">Iesniegt izmaiņas</button>
 <button onclick='deleteReservation("{{ reservation._id }}")' class="btn btn-red btn-center btn-m">Noņemt</button>
 <a href="/reserved" class="btn btn-red btn-center btn-m">Atpakaļ uz rezervāciju saraksu</a>
 {% endblock %}

@@ -120,12 +120,13 @@ def car_reserve(id):
 @app.route("/reserved/<reservation_id>")
 def view_reserved_car(reservation_id):
     reservation = reservations_db.find_one({"_id": ObjectId(reservation_id)})
-    
     if not reservation: return "404 - reservation not found"
-
     car = cars_db.find_one({"_id": ObjectId(reservation["car_id"])})
-
     if not car: return "404 - car not found"
+
+    rent_point = rent_points_db.find_one({"_id": car["rent_point_id"]})
+    if not rent_point: return "404 - rent point not found"
+    car["rent_point"] = rent_point
 
     return render_template("reserved_car.html", car=car, reservation=reservation)
 

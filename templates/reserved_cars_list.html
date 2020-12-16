@@ -6,7 +6,7 @@
 
 {{ super() }}
 
-<script src="{{ url_for('static', filename='js/reservation_list.js') }}"></script>
+<script src="{{ url_for('static', filename='js/reserve.js') }}"></script>
 
 {% endblock %}
 
@@ -27,7 +27,7 @@
             </a>
         </div>
         <div class="right">
-            <button onclick='deleteReservation("{{ reservation_id }}")' class="btn btn-red btn-m">Noņemt</button>
+            <button onclick='deleteReservation("{{ car.reservation._id }}")' class="btn btn-red btn-m">Noņemt</button>
             <a href="/reserved/{{ car.reservation._id | string }}/edit" class="btn btn-blue btn-m">Rediģēt</a>
         </div>
     </li>

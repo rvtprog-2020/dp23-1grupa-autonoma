@@ -1,31 +1,44 @@
-var carPrice = 0;
 var days = 0;
-var reservationId = null;
-
-function setPrice(price) {
-    carPrice = price;
-}
-
-function setReservationId(id) {
-    reservationId = id;
-}
 
 window.addEventListener("load", function() {
     let daysSlider = document.getElementById("slider-days");
     changeSlider(daysSlider.value);
 });
 
-function changeSlider(value) {
-    let reserveInfo = document.getElementById("reserve-info");
+function changeSlider(carPrice, value) {
     let reserveDays = document.getElementById("reserve-days");
     let reservePrice = document.getElementById("reserve-price");
     
-    reserveInfo.classList.remove("hidden");
+    if (value === undefined) {
+        reserveDays.innerText = "";
+        reservePrice.innerText = "";
+    } else {
+        days = value;
 
-    days = value;
+        reserveDays.innerText = days;
+        reservePrice.innerText = days + " * " + carPrice + "€ = " + days * carPrice + "€";
+    }
+}
 
-    reserveDays.innerText = value;
-    reservePrice.innerText = value + " * " + carPrice + "€ = " + value * carPrice + "€";
+async function deleteReservation(reservationId) {
+    let response = await fetch("http://localhost/delete_reservation", {
+        method: "POST",
+        headers: {
+            "Accept": "application/json",
+            "Content-type": "application/json"
+        },
+        body: JSON.stringify({
+            "reservation_id": reservationId
+        })
+    });
+    let data = await response.json();
+    console.log(data);
+
+    if (data.code == 200) {
+        window.location.reload();
+    } else {
+        alert(data.msg);
+    }
 }
 
 async function reserveCar(car_id) {
@@ -53,11 +66,7 @@ async function reserveCar(car_id) {
     }
 }
 
-async function editCar(car_id) {
-    if (reservationId == null) {
-        return;
-    }
-
+async function editReservation(reservationId) {
     let response = await fetch("http://localhost/edit_reservation", {
         method: "POST",
         headers: {

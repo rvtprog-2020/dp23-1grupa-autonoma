@@ -11,9 +11,6 @@
 {% endblock %}
 
 {% block content %}
-<script>
-    setPrice({{ car.price }});
-</script>
 <div class="container">
     <img src="{{ car.image }}" alt="" class="auto-image auto-image-center">
     <div class="center-info">
@@ -26,8 +23,8 @@
         </a>
     </div>
 
-    <div id="reserve-info" class="center-info hidden">
-        <input id="slider-days" type="range" min="1" max="30" onchange="changeSlider(this.value)" oninput="changeSlider(this.value)">
+    <div id="reserve-info" class="center-info">
+        <input id="slider-days" type="range" min="1" max="30" onchange="changeSlider({{ car.price }}, this.value)" oninput="changeSlider(this.value)">
 
         <p>Dienas: <span id="reserve-days"></span></p>
         <p>Cena: <span id="reserve-price"></span></p>
