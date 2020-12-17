@@ -1,23 +1,45 @@
 {% extends "layout.html" %}
 
-{{ filters }}
+{% block title %}Mekēšana{% endblock %}
+
+{% block head %}
+
+{{ super() }}
+
+<script src="{{ url_for('static', filename='js/search.js') }}"></script>
+
+{% endblock %}
 
 {% block content %}
+
+<script>
+    {% for car in cars %}
+    addCar("{{ car.name }}", "{{ car.brand }}", "{{ car.class}}", "{{ car.mileage}}", "/car/{{ car._id }}");
+    {% endfor %}
+
+    {% for filter in filters %}
+    {% for element in filter.elements %}
+    addFilter("{{ filter.id }}", "{{ element }}");
+    {% endfor %}
+    {% endfor %}
+</script>
 
 {% for filter in filters %}
 
 <hr>
 
-<label for="">{{ filter.name }}</label>
+<label>{{ filter.name }}</label>
 
 {% for element in filter.elements %}
 
 <br>
-<input type="checkbox" name="{{filter.name}}-{{ element }}" id="{{filter.name}}-{{ element }}">
+<input type="checkbox" onclick='updateFilter("{{ filter.id }}", "{{ element }}", this.checked)' checked>
 <label for="{{ element }}">{{ element }}</label>
 
 {% endfor %}
 
 {% endfor %}
+
+<div id="searchResults"></div>
 
 {% endblock %}

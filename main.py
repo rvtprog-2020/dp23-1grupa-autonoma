@@ -49,33 +49,34 @@ def home():
 
 @app.route("/search")
 def search():
-
     brands_list = set()
+    mileage_list = set()
+    class_list = set()
     
     for car in cars_db.find():
         brands_list.add(car["brand"])
-
-    mileage_list = set()
-    
-    for car in cars_db.find():
         mileage_list.add(car["mileage"])
+        class_list.add(car["class"])
         
     filters = [
         {
             "id": "brand",
-            "name": "Car Brand",
+            "name": "Auto marka",
             "elements": brands_list
         },
         {
             "id": "mileage",
-            "name": "Car Mileage",
+            "name": "Auto nobraukums",
             "elements": mileage_list
+        },
+        {
+            "id": "class",
+            "name": "Auto klase",
+            "elements": class_list
         }
     ]
 
-    print(filters)
-
-    return render_template("search.html", filters=filters)
+    return render_template("search.html", filters=filters, cars=list(cars_db.find()))
 
 @app.route("/car/<id>")
 def car_by_id(id):
