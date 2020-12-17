@@ -8,15 +8,13 @@
 {% endblock %}
 
 {% block content %}
-<script>
-    setCarId("{{ car._id }}");
-</script>
-
 <img src="{{ car.image }}" alt="" class="auto-image auto-image-center">
 <div class="center-info">
     <p>{{ car.name }}</p>
     <p>Nobraukums: {{ car.mileage }} km</p>
     <p>Sēdvietas: {{ car.seats }}</p>
+    <p>Modelis: {{ car.model }}</p>
+    <p>Klase: {{ car.class }}</p>
     <p>Cena: {{ car.price }}€ / diena</p>
     <a href="/admin/rent_points/{{ car.rent_point._id }}" class="car-link">
         Rent Point: {{ car.rent_point.name }} - {{ car.rent_point.location }}
@@ -37,6 +35,18 @@
 
 <label for="carSeats">Sēdvietas skaits</label>
 <input type="number" name="carSeats" id="carSeats" value="{{ car.seats }}">
+<br>
+
+<label for="carModel">Modelis</label>
+<input type="text" name="carModel" id="carModel" value="{{ car.model }}">
+<br>
+
+<label for="carClass">Klase</label>
+<select name="carClass" id="carClass">
+    <option value="small" {% if car.class == "small" %} selected {% endif %}>Mazs</option>
+    <option value="premium" {% if car.class == "premium" %} selected {% endif %}>Premium</option>
+    <option value="test" {% if car.class == "test" %} selected {% endif %}>Test</option>
+</select>
 <br>
 
 <label for="carPrice">Auto cena (€ / diena)</label>

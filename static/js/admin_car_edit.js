@@ -30,6 +30,8 @@ async function editCar(carId) {
     carBrand = document.getElementById("carBrand");
     carMileage = document.getElementById("carMileage");
     carSeats = document.getElementById("carSeats");
+    carModel = document.getElementById("carModel");
+    carClass = document.getElementById("carClass");
     carPrice = document.getElementById("carPrice");
     carImage = document.getElementById("carImage");
     carRentPoint = document.getElementById("rentPoint");
@@ -46,6 +48,8 @@ async function editCar(carId) {
             "car_brand": carBrand.value,
             "car_mileage": parseInt(carMileage.value),
             "car_seats": parseInt(carSeats.value),
+            "car_model": carModel.value,
+            "car_class": carClass.value,
             "car_price": parseInt(carPrice.value),
             "car_image": carImage.value,
             "car_rent_point": carRentPoint.value
@@ -66,6 +70,8 @@ async function addCar() {
     carBrand = document.getElementById("carBrand");
     carMileage = document.getElementById("carMileage");
     carSeats = document.getElementById("carSeats");
+    carModel = document.getElementById("carModel");
+    carClass = document.getElementById("carClass");
     carPrice = document.getElementById("carPrice");
     carImage = document.getElementById("carImage");
     carRentPoint = document.getElementById("rentPoint");
@@ -81,6 +87,8 @@ async function addCar() {
             "car_brand": carBrand.value,
             "car_mileage": parseInt(carMileage.value),
             "car_seats": parseInt(carSeats.value),
+            "car_model": carModel.value,
+            "car_class": carClass.value,
             "car_price": parseInt(carPrice.value),
             "car_image": carImage.value,
             "car_rent_point": carRentPoint.value

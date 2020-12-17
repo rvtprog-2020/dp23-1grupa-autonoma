@@ -354,6 +354,8 @@ def admin_edit_car_post():
                 "name": jsonData["car_name"],
                 "mileage": jsonData["car_mileage"],
                 "seats": jsonData["car_seats"],
+                "model": jsonData["car_model"],
+                "class": jsonData["car_class"],
                 "price": jsonData["car_price"],
                 "image": jsonData["car_image"],
                 "rent_point": jsonData["car_rent_point"]
@@ -402,6 +404,8 @@ def add_car_post():
             "brand": jsonData["car_brand"],
             "mileage": jsonData["car_mileage"],
             "seats": jsonData["car_seats"],
+            "model": jsonData["car_model"],
+            "class": jsonData["car_class"],
             "price": jsonData["car_price"],
             "image": jsonData["car_image"],
             "rent_point_id": rent_point_id

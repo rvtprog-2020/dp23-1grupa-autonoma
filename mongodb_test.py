@@ -13,7 +13,7 @@ def connect_db(dbname):
     
     return MongoClient("mongodb+srv://" + username + ":" + password + "@" + cluster_name + ".839ly.mongodb.net/" + dbname + "?retryWrites=true&w=majority")
 
-def run_brand_fixer():
+def run_fixer():
     client = connect_db("test")
 
     db = client["test"]
@@ -22,15 +22,16 @@ def run_brand_fixer():
 
     for car in cars_db.find():
         print(car["name"])
-        brand_name = input()
-        print(brand_name)
 
-        cars_db.update({"_id": car["_id"]}, {
-            "$set": {
-                "brand": brand_name
-            }
+        if "model" not in car:
+            name = input()
+            print(name)
 
-        })
+            cars_db.update_one({"_id": car["_id"]}, {
+                "$set": {
+                    "model": name
+                }
+            })
 
 def check_car(car):
     return "name" in car and "image" in car and "mileage" in car and "seats" in car and "price" in car and "rent_point_id" in car and "brand" in car
@@ -66,4 +67,4 @@ def run_db_check():
     print("Successfully checked!")
 
 if __name__ == "__main__":
-    run_db_check()
+    run_fixer()
