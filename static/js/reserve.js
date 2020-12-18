@@ -35,7 +35,7 @@ async function deleteReservation(reservationId) {
     console.log(data);
 
     if (data.code == 200) {
-        window.location.reload();
+        window.location.href = "/reserved";
     } else {
         alert(data.msg);
     }
