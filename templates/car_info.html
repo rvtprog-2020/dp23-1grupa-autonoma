@@ -11,7 +11,7 @@
     <p>Modelis: {{ car.model }}</p>
     <p>Klase: {{ car.class }}</p>
     <p>Cena: {{ car.price }}€ / diena</p>
-    <a href="/admin/rent_points/{{ car.rent_point._id }}" class="car-link">
+    <a href="/rent_points/{{ car.rent_point._id }}" class="car-link">
         Noma punkts: {{ car.rent_point.name }} - {{ car.rent_point.location }}
     </a>
 </div>

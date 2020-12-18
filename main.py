@@ -161,6 +161,13 @@ def reserved_cars_list():
 def rent_points_list():
     return render_template("rent_points_list.html", rent_points=list(rent_points_db.find()))
 
+@app.route("/rent_points/<rent_point_id>")
+def rent_point_view(rent_point_id):
+    rent_point_id = ObjectId(rent_point_id)
+    rent_point = rent_points_db.find_one({"_id": rent_point_id})
+    if not rent_point: return "404 - rent point not found"
+    return render_template("rent_point_view.html", rent_point=rent_point, cars=list(cars_db.find({"rent_point_id": rent_point_id})))
+
 @app.route("/admin/cars/<page_id>")
 def admin_cars_list(page_id):
     page = get_page_by_id(page_id)

@@ -8,7 +8,7 @@
 <ul>
     {% for rent_point in rent_points %}
     <li>
-        <a href="/admin/rent_points/{{ rent_point._id }}" class="car-link">
+        <a href="/rent_points/{{ rent_point._id }}" class="car-link">
             {{ rent_point.name }} - {{ rent_point.location }}
         </a>
     </li>
