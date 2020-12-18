@@ -18,7 +18,7 @@
             <img src="{{ car.image }}" alt="" class="auto-image">
         </div>
         <div class="center">
-            <a class="car-link" href="/reserved/{{ reservation_id }}">{{ car.name }} ir rezervēta {{ car.reservation.days }} dienas par {{ car.reservation.price }}€</a>
+            <a class="car-link" href="/reserved/{{ car.reservation._id }}">{{ car.name }} ir rezervēta {{ car.reservation.days }} dienas par {{ car.reservation.price }}€</a>
             <p>Nobraukums: {{ car.mileage }} km</p>
             <p>Sēdvietas: {{ car.seats }}</p>
             <p>Cena: {{ car.price }}€ / diena</p>
